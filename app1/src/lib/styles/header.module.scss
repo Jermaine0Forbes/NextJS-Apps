@@ -1,0 +1,12 @@
+@use "__var" as *;
+
+#header {
+
+    color: white;
+    background:$grey;
+
+    a {
+        text-transform:capitalize;
+        margin-right: 0.5em;
+    }
+}
