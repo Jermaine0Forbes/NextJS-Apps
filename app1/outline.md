@@ -6,7 +6,7 @@
 - ~~install sass ~~
 - ~~learn how to create a form into the register page~~
 - ~~create a service to handle registration data~~
-- ~~add zod schema to registration form
+- ~~add zod schema to registration form~~
 - show errors if validation fails
 - signup to vercel account
 - learn how to connect to database 
