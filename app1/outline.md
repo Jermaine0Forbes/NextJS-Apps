@@ -6,10 +6,12 @@
 - ~~install sass ~~
 - ~~learn how to create a form into the register page~~
 - ~~create a service to handle registration data~~
-- learn how to send formdata to controller
+- ~~add zod schema to registration form
+- show errors if validation fails
+- signup to vercel account
+- learn how to connect to database 
 - learn how to create models in next.js
 - possibly  deploy app to vercel, if free
-- learn how to connect to database 
 - save data to database
 - create a jwt token 
 
