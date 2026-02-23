@@ -1,5 +1,5 @@
 'use client'
-
+import { useActionState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
     Field,
@@ -16,13 +16,23 @@ import { registerUser } from "@/lib/action";
 
 export default function RegisterForm() {
 
+    const [state, action, isPending ] = useActionState(registerUser, null);
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         console.log(e)
 
     };
+
+    useEffect(() => {
+
+        if(state) {
+            console.log(state)
+        }
+    }, [state]);
+
     return (
-        <form id="register-form" action={registerUser}>
+        <form id="register-form" action={action}>
             <FieldGroup>
                 <FieldLegend>Register</FieldLegend>
                 <FieldDescription>this is the register page</FieldDescription>

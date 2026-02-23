@@ -24,3 +24,11 @@ npm run dev
 
 
 
+## 2-20-26
+
+- [defining schemas with zod](https://zod.dev/api#strings)
+- [useActionState](https://react.dev/reference/react/useActionState)
+- [authentication in next.js](https://nextjs.org/docs/app/guides/authentication#3-create-a-user-or-check-user-credentials)
+
+
+
