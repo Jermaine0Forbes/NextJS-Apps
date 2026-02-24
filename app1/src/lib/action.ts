@@ -1,9 +1,16 @@
 'use server'
 import { validateRegister } from "./validation"
 
-export async function registerUser(formData: FormData): Promise<any>{
+export async function registerUser( prevState: FormData|null , formData: FormData): Promise<any>{
 
-    return await validateRegister(formData);
+    console.log('form data')
+    console.log(formData)
+    const result =  await validateRegister(formData);
+
+    if(!result.success) {
+
+        return { values: Object.fromEntries(formData.entries()),  errors: result.error.flatten().fieldErrors};
+    }
 
 
 
