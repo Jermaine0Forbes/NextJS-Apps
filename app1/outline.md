@@ -7,10 +7,11 @@
 - ~~learn how to create a form into the register page~~
 - ~~create a service to handle registration data~~
 - ~~add zod schema to registration form~~
-- show errors if validation fails
-- signup to vercel account
-- learn how to connect to database 
-- learn how to create models in next.js
+- ~~show errors if validation fails~~
+- ~~signup to vercel account~~
+- ~~learn how to connect to database~~ 
+- ~~learn how to create models in next.js~~
+- get data from prisma
 - possibly  deploy app to vercel, if free
 - save data to database
 - create a jwt token 
@@ -22,6 +23,50 @@ npm run dev
 
 ```
 
+## 2-24-26
+
+If you try to seed your data, but you get an error saying that a table doesn't exist.
+Do this
+
+```
+
+```
+
+
+To see your data within prisma studio
+
+```
+npx prisma studio
+```
+
+Make sure to add npx whenever using vercel cli
+
+```
+# like so 
+npx vercel link
+```
+
+
+[prisma storage in vercel page](https://vercel.com/jermaine0forbes-projects/~/integrations/prisma/icfg_0lvHHa8P8Mr1neCLUTRFMB3I/resources/storage/store_OkgNLos6lWuM5OMR/guides)
+
+to install vercel globally 
+
+```
+npm install -g vercel
+```
+
+[connect prisma to next.js](https://www.prisma.io/docs/guides/frameworks/nextjs)
+```
+npm install prisma tsx @types/pg --save-dev
+
+npm install @prisma/client @prisma/adapter-pg dotenv pg
+
+npx prisma init --db --output ../app/generated/prisma
+```
+
+[change colors in tailwind](https://tailwindcss.com/docs/color)
+
+[How to flatten errors in zod](https://www.google.com/search?q=zod+flatten+errors&oq=zod+flatten+errors&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIICAEQABgWGB4yDQgCEAAYhgMYgAQYigUyCggDEAAYgAQYogTSAQg1OTAxajBqN6gCALACAA&sourceid=chrome&ie=UTF-8)
 
 
 ## 2-20-26
