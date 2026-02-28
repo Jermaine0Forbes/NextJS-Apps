@@ -3,7 +3,7 @@
 
 - ~~create a login and register page~~
 - ~~apply shadcn to navigation~~
-- ~~install sass ~~
+- ~~install sass~~
 - ~~learn how to create a form into the register page~~
 - ~~create a service to handle registration data~~
 - ~~add zod schema to registration form~~
@@ -17,11 +17,30 @@
 - create a jwt token 
 
 
-```
 
+## general commands
+```
+# to start the next.js server
 npm run dev
 
+
+# to generate the prisma client
+# needed to connect to database and .env also needs to be present
+npx prisma generate
+
 ```
+
+## 2-27-26
+
+To generate your prisma client that will have your models and other essential files you need to use this command
+
+```
+npx prisma generate
+
+```
+Since your database env variable will not be stored in git, you need to log into vercel and go to your app's [storage page](https://vercel.com/jermaine0forbes-projects/app1/integrations/prisma/icfg_0lvHHa8P8Mr1neCLUTRFMB3I/resources/storage/store_OkgNLos6lWuM5OMR/guides) that will have the necessary environment variables
+
+
 
 ## 2-24-26
 
@@ -29,7 +48,7 @@ If you try to seed your data, but you get an error saying that a table doesn't e
 Do this
 
 ```
-
+npx prisma migrate dev --name init
 ```
 
 

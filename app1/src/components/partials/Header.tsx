@@ -24,6 +24,9 @@ export default function Header()
               <NavigationMenuItem>
                   <Link href={'/login'}>login</Link>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                  <Link href={'/users'}>users</Link>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </header>
