@@ -30,6 +30,17 @@ npx prisma generate
 
 ```
 
+
+## 3-3-26
+
+### database differences
+
+So I finally was able to get next.js to show the seeded data that I generated in prisma. But throughout this whole session, I was trying to figure out why the prisma database that I called `prisma-default` had data inside of it, but in my local server it did not. I'm thinking that when I first successfully deployed my app to vercel, it automatically seeded the data to `prisma-default` so I initially thought that when I was accessing postgres from prisma, I'm connecting to that the server. But in reality, I'm only connecting a local postgres server on my machine. I would do more testing in the future, but I think I understand what's going on. Didn't think I would put this much time into it though.
+
+### if you get a 404 error when running next.js
+
+There's a possiblity that the issue might have to do with naming another directory `app` in a prisma example when trying to generate a prisma db with this command `npx prisma init --db --output ../app/generated/prisma`.  You are supposed to put it in the `src` directory, not in the root folder. So if you did all the steps to set prisma up and then you run your next.js app, it's looking for the first app directory it can find. And since it finds the `app/generate/prisma` it's looking for any files that will be used. So the solution is to either rename `app/generate/prisma` or put the directory in the original app.
+
 ## 2-27-26
 
 To generate your prisma client that will have your models and other essential files you need to use this command

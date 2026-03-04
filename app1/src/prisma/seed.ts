@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "../app/generated/prisma/client";
+import { PrismaClient, Prisma } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
 
@@ -12,29 +12,29 @@ const prisma = new PrismaClient({
 
 const userData: Prisma.UserCreateInput[] = [
   {
-    name: "Alice",
-    email: "alice@prisma.io",
+    name: "John",
+    email: "john@prisma.io",
     posts: {
       create: [
         {
-          title: "Join the Prisma Discord",
+          title: "a",
           content: "https://pris.ly/discord",
           published: true,
         },
         {
-          title: "Prisma on YouTube",
+          title: "b",
           content: "https://pris.ly/youtube",
         },
       ],
     },
   },
   {
-    name: "Bob",
-    email: "bob@prisma.io",
+    name: "Jacob",
+    email: "jacob@prisma.io",
     posts: {
       create: [
         {
-          title: "Follow Prisma on Twitter",
+          title: "c",
           content: "https://www.twitter.com/prisma",
           published: true,
         },

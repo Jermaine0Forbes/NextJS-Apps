@@ -1,7 +1,13 @@
+import prisma from "@/lib/prisma";
 
-export default function Users() {
 
 
+export default async function Users() {
+
+ const users = await prisma.user.findMany();
+
+  console.log('users')
+  console.log(users)
 
     return (
         <main id="users" className="@container">
