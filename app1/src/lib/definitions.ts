@@ -3,3 +3,10 @@ export interface IRegisterErrors {
     password? : Array<string>,
     email? : Array<string>
 }
+
+
+export interface IUsers {
+    id?: number,
+    email?: string,
+    name?: string | null,
+}

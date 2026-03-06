@@ -11,8 +11,9 @@
 - ~~signup to vercel account~~
 - ~~learn how to connect to database~~ 
 - ~~learn how to create models in next.js~~
-- get data from prisma
-- possibly  deploy app to vercel, if free
+- ~~possibly  deploy app to vercel, if free~~
+- ~~get data from prisma~~
+- add faker data to prisma
 - save data to database
 - create a jwt token 
 
