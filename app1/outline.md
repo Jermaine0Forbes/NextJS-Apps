@@ -31,6 +31,10 @@ npx prisma generate
 
 ```
 
+## 3-10-26
+
+install prisma extension in vscode in order to have proper syntax highlighting in `schema.prisma`
+
 
 ## 3-3-26
 

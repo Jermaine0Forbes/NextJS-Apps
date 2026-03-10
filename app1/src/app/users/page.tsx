@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { ColumnDef} from "@tanstack/react-table";
 import { IUsers } from "@/lib/definitions";
 import UserTable from "@/components/tables/UserTable";
 
