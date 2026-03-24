@@ -31,6 +31,12 @@ npx prisma generate
 
 ```
 
+
+## 3-24-26
+Okay, I was very confused for a long time as to how to push data to the `prisma-default` database that I have connected to vercel. However, I realized that
+`postgres://2a99fd09e874a5341dfaf4b503...` is the connection to `prisma-default`, in other words, the production database. I guess I was really confused because my `.env` files are not holding the connections. Naturally, I'm thought the .env file would hold the production connection string, but it held the local connection, and the `.env.local` holds the production connection. I just needed to state this because this confused the hell out of me for hours. To be fair, it's all my fault, so I'm not blaming prisma or next.js
+
+
 ## 3-10-26
 
 install prisma extension in vscode in order to have proper syntax highlighting in `schema.prisma`

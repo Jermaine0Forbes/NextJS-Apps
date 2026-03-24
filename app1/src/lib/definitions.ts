@@ -8,7 +8,7 @@ export interface IRegisterErrors {
 export interface IUsers {
     id?: number,
     email?: string,
-    name?: string | null,
+    name?: string | null | undefined,
 
 }
 
