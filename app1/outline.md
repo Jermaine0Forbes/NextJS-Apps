@@ -13,9 +13,17 @@
 - ~~learn how to create models in next.js~~
 - ~~possibly  deploy app to vercel, if free~~
 - ~~get data from prisma~~
-- add faker data to prisma
-- save data to database
-- create a jwt token 
+- ~~add faker data to prisma~~
+- ~~save data to database~~
+- ~~wipe database~~
+- ~~update user model to add password, role~~
+-  seed data of users and posts
+- install auth.js
+- add auth configuration
+- register a user through form
+- hash password when saved
+- create a token and set it to cookie once user register/logs in
+- create a logout api 
 
 
 
@@ -33,6 +41,11 @@ npx prisma generate
 
 
 ## 3-24-26
+
+### to clear your prisma tables
+`npx prisma migrate reset`
+
+### prisma-default production rant
 Okay, I was very confused for a long time as to how to push data to the `prisma-default` database that I have connected to vercel. However, I realized that
 `postgres://2a99fd09e874a5341dfaf4b503...` is the connection to `prisma-default`, in other words, the production database. I guess I was really confused because my `.env` files are not holding the connections. Naturally, I'm thought the .env file would hold the production connection string, but it held the local connection, and the `.env.local` holds the production connection. I just needed to state this because this confused the hell out of me for hours. To be fair, it's all my fault, so I'm not blaming prisma or next.js
 
