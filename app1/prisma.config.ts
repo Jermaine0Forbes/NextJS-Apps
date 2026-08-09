@@ -4,7 +4,14 @@
 import dotenv from  "dotenv";
 import { defineConfig } from "prisma/config";
 
+const ENV = "dev";
+
+if(ENV != "dev")
+{
 dotenv.config( {path: ".env.local"})
+}else{
+  dotenv.config( {path: ".env"})
+}
 console.log('foo')
 
 // process.env.NODE_ENV !== "production" ? process.loadEnvFile('.env')  : process.loadEnvFile('.env.local') ;
