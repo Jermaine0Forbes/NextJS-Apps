@@ -5,9 +5,89 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "@/app/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+
+model Role {
+  id        Int     @id @default(autoincrement())
+  name      RoleName @default(USER)
+  users     User[]
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  name      String?
+  roleId    Int
+  role      Role    @relation(fields: [roleId], references: [id])
+  createdAt DateTime @default(now())
+  quotes  Quote[]
+  session Session[]
+  favorites Favorite[]
+  subcription SubscriptionPlan[]
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  expires      DateTime
+}
+
+model Quote {
+
+  id  Int @id @default(autoincrement())
+  message String 
+  userId Int
+  user  User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  favorites Favorite[]
+}
+
+model Favorite {
+  // id Int @id @default(autoincrement())
+  userId Int 
+  quoteId Int 
+  quote Quote @relation(fields: [quoteId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  @@id([quoteId, userId])
+}
+
+model Plan {
+id Int @id @default(autoincrement())
+name PlanName
+quoteMax Int
+emailMax Int
+createdAt DateTime @default(now())
+subscriptions SubscriptionPlan[]
+}
+
+model SubscriptionPlan {
+// id Int @id @default(autoincrement())
+planId Int 
+plan Plan @relation(fields: [planId], references: [id])
+userId Int
+user User @relation(fields: [userId], references: [id])
+createdAt DateTime @default(now())
+@@id([planId, userId])
+}
+
+enum PlanName {
+  BRONZE
+  SILVER
+  GOLD
+}
+enum RoleName {
+  USER
+  MODERATOR
+  ADMIN
+  SUPER_ADMIN
 }
