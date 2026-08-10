@@ -1,7 +1,7 @@
 # Tasks
 
 - ~~install prisma~~
-- create users, quotes, sessions,  roles, plans, subscription_plans db
+- ~~create users, quotes, sessions,  roles, plans, subscription_plans db~~
 - generate fake data for the tables
 - add graphql as api method
 - pull quotes data to page
