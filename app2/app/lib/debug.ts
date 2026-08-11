@@ -27,6 +27,6 @@ export async function checkPermissions() {
   console.log('Table Privileges:', tablePrivileges);
 }
 
-// checkPermissions()
-//   .catch((e) => console.error(e))
-//   .finally(async () => await prisma.$disconnect());
+checkPermissions()
+  .catch((e) => console.error(e))
+  .finally(async () => await prisma.$disconnect());
