@@ -1,7 +1,7 @@
-import { PrismaClient, Prisma } from "@/prisma/client";
+import { PrismaClient, Prisma } from "@/app/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
-// import { generateMultiUsers } from "@/lib/faker";
+import { createMultiUsers, createRole } from "@/app/lib/faker";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
@@ -49,9 +49,12 @@ const prisma = new PrismaClient({
 // console.log('user data')
 // console.log(userData)
 
+const userData: Prisma.UserUncheckedCreateInput[] = createMultiUsers(30);
+const roleData: Prisma.RoleCreateInput = createRole("USER");
+
 export async function main() {
-  for (const u of userData) {
-    await prisma.user.create({ data: u });
+  for (const user of userData) {
+    await prisma.user.create({ data: user });
   }
 }
 
