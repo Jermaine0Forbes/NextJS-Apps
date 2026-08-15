@@ -10,6 +10,17 @@ export function createRole( role: roles):RoleCreateInput
     }
 }
 
+export function createMultiRole(names: roles[]): RoleCreateInput[]
+{
+  const roles: RoleCreateInput[] = [];
+
+   names.forEach((name) => {
+     roles.push(createRole(name))
+   })
+
+   return roles;
+}
+
 export function createUser(index: number): UserUncheckedCreateInput
 {
     let count: number = faker.number.int(20);

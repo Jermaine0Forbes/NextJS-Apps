@@ -27,28 +27,33 @@ export type AggregateFavorite = {
 }
 
 export type FavoriteAvgAggregateOutputType = {
+  id: number | null
   userId: number | null
   quoteId: number | null
 }
 
 export type FavoriteSumAggregateOutputType = {
+  id: number | null
   userId: number | null
   quoteId: number | null
 }
 
 export type FavoriteMinAggregateOutputType = {
+  id: number | null
   userId: number | null
   quoteId: number | null
   createdAt: Date | null
 }
 
 export type FavoriteMaxAggregateOutputType = {
+  id: number | null
   userId: number | null
   quoteId: number | null
   createdAt: Date | null
 }
 
 export type FavoriteCountAggregateOutputType = {
+  id: number
   userId: number
   quoteId: number
   createdAt: number
@@ -57,28 +62,33 @@ export type FavoriteCountAggregateOutputType = {
 
 
 export type FavoriteAvgAggregateInputType = {
+  id?: true
   userId?: true
   quoteId?: true
 }
 
 export type FavoriteSumAggregateInputType = {
+  id?: true
   userId?: true
   quoteId?: true
 }
 
 export type FavoriteMinAggregateInputType = {
+  id?: true
   userId?: true
   quoteId?: true
   createdAt?: true
 }
 
 export type FavoriteMaxAggregateInputType = {
+  id?: true
   userId?: true
   quoteId?: true
   createdAt?: true
 }
 
 export type FavoriteCountAggregateInputType = {
+  id?: true
   userId?: true
   quoteId?: true
   createdAt?: true
@@ -172,6 +182,7 @@ export type FavoriteGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type FavoriteGroupByOutputType = {
+  id: number
   userId: number
   quoteId: number
   createdAt: Date
@@ -201,6 +212,7 @@ export type FavoriteWhereInput = {
   AND?: Prisma.FavoriteWhereInput | Prisma.FavoriteWhereInput[]
   OR?: Prisma.FavoriteWhereInput[]
   NOT?: Prisma.FavoriteWhereInput | Prisma.FavoriteWhereInput[]
+  id?: Prisma.IntFilter<"Favorite"> | number
   userId?: Prisma.IntFilter<"Favorite"> | number
   quoteId?: Prisma.IntFilter<"Favorite"> | number
   createdAt?: Prisma.DateTimeFilter<"Favorite"> | Date | string
@@ -209,6 +221,7 @@ export type FavoriteWhereInput = {
 }
 
 export type FavoriteOrderByWithRelationInput = {
+  id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -217,7 +230,7 @@ export type FavoriteOrderByWithRelationInput = {
 }
 
 export type FavoriteWhereUniqueInput = Prisma.AtLeast<{
-  quoteId_userId?: Prisma.FavoriteQuoteIdUserIdCompoundUniqueInput
+  id?: number
   AND?: Prisma.FavoriteWhereInput | Prisma.FavoriteWhereInput[]
   OR?: Prisma.FavoriteWhereInput[]
   NOT?: Prisma.FavoriteWhereInput | Prisma.FavoriteWhereInput[]
@@ -226,9 +239,10 @@ export type FavoriteWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Favorite"> | Date | string
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "quoteId_userId">
+}, "id">
 
 export type FavoriteOrderByWithAggregationInput = {
+  id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -243,6 +257,7 @@ export type FavoriteScalarWhereWithAggregatesInput = {
   AND?: Prisma.FavoriteScalarWhereWithAggregatesInput | Prisma.FavoriteScalarWhereWithAggregatesInput[]
   OR?: Prisma.FavoriteScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FavoriteScalarWhereWithAggregatesInput | Prisma.FavoriteScalarWhereWithAggregatesInput[]
+  id?: Prisma.IntWithAggregatesFilter<"Favorite"> | number
   userId?: Prisma.IntWithAggregatesFilter<"Favorite"> | number
   quoteId?: Prisma.IntWithAggregatesFilter<"Favorite"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Favorite"> | Date | string
@@ -255,6 +270,7 @@ export type FavoriteCreateInput = {
 }
 
 export type FavoriteUncheckedCreateInput = {
+  id?: number
   userId: number
   quoteId: number
   createdAt?: Date | string
@@ -267,12 +283,14 @@ export type FavoriteUpdateInput = {
 }
 
 export type FavoriteUncheckedUpdateInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   quoteId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FavoriteCreateManyInput = {
+  id?: number
   userId: number
   quoteId: number
   createdAt?: Date | string
@@ -283,6 +301,7 @@ export type FavoriteUpdateManyMutationInput = {
 }
 
 export type FavoriteUncheckedUpdateManyInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   quoteId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -298,35 +317,35 @@ export type FavoriteOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type FavoriteQuoteIdUserIdCompoundUniqueInput = {
-  quoteId: number
-  userId: number
-}
-
 export type FavoriteCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type FavoriteAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
 }
 
 export type FavoriteMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type FavoriteMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type FavoriteSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
 }
@@ -421,6 +440,7 @@ export type FavoriteCreateWithoutUserInput = {
 }
 
 export type FavoriteUncheckedCreateWithoutUserInput = {
+  id?: number
   quoteId: number
   createdAt?: Date | string
 }
@@ -455,6 +475,7 @@ export type FavoriteScalarWhereInput = {
   AND?: Prisma.FavoriteScalarWhereInput | Prisma.FavoriteScalarWhereInput[]
   OR?: Prisma.FavoriteScalarWhereInput[]
   NOT?: Prisma.FavoriteScalarWhereInput | Prisma.FavoriteScalarWhereInput[]
+  id?: Prisma.IntFilter<"Favorite"> | number
   userId?: Prisma.IntFilter<"Favorite"> | number
   quoteId?: Prisma.IntFilter<"Favorite"> | number
   createdAt?: Prisma.DateTimeFilter<"Favorite"> | Date | string
@@ -466,6 +487,7 @@ export type FavoriteCreateWithoutQuoteInput = {
 }
 
 export type FavoriteUncheckedCreateWithoutQuoteInput = {
+  id?: number
   userId: number
   createdAt?: Date | string
 }
@@ -497,6 +519,7 @@ export type FavoriteUpdateManyWithWhereWithoutQuoteInput = {
 }
 
 export type FavoriteCreateManyUserInput = {
+  id?: number
   quoteId: number
   createdAt?: Date | string
 }
@@ -507,16 +530,19 @@ export type FavoriteUpdateWithoutUserInput = {
 }
 
 export type FavoriteUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   quoteId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FavoriteUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   quoteId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FavoriteCreateManyQuoteInput = {
+  id?: number
   userId: number
   createdAt?: Date | string
 }
@@ -527,11 +553,13 @@ export type FavoriteUpdateWithoutQuoteInput = {
 }
 
 export type FavoriteUncheckedUpdateWithoutQuoteInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FavoriteUncheckedUpdateManyWithoutQuoteInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -539,6 +567,7 @@ export type FavoriteUncheckedUpdateManyWithoutQuoteInput = {
 
 
 export type FavoriteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   userId?: boolean
   quoteId?: boolean
   createdAt?: boolean
@@ -547,6 +576,7 @@ export type FavoriteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 }, ExtArgs["result"]["favorite"]>
 
 export type FavoriteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   userId?: boolean
   quoteId?: boolean
   createdAt?: boolean
@@ -555,6 +585,7 @@ export type FavoriteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 }, ExtArgs["result"]["favorite"]>
 
 export type FavoriteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   userId?: boolean
   quoteId?: boolean
   createdAt?: boolean
@@ -563,12 +594,13 @@ export type FavoriteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 }, ExtArgs["result"]["favorite"]>
 
 export type FavoriteSelectScalar = {
+  id?: boolean
   userId?: boolean
   quoteId?: boolean
   createdAt?: boolean
 }
 
-export type FavoriteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "quoteId" | "createdAt", ExtArgs["result"]["favorite"]>
+export type FavoriteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "quoteId" | "createdAt", ExtArgs["result"]["favorite"]>
 export type FavoriteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -589,6 +621,7 @@ export type $FavoritePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
+    id: number
     userId: number
     quoteId: number
     createdAt: Date
@@ -675,8 +708,8 @@ export interface FavoriteDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * // Get first 10 Favorites
    * const favorites = await prisma.favorite.findMany({ take: 10 })
    * 
-   * // Only select the `userId`
-   * const favoriteWithUserIdOnly = await prisma.favorite.findMany({ select: { userId: true } })
+   * // Only select the `id`
+   * const favoriteWithIdOnly = await prisma.favorite.findMany({ select: { id: true } })
    * 
    */
   findMany<T extends FavoriteFindManyArgs>(args?: Prisma.SelectSubset<T, FavoriteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -720,9 +753,9 @@ export interface FavoriteDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   ]
    * })
    * 
-   * // Create many Favorites and only return the `userId`
-   * const favoriteWithUserIdOnly = await prisma.favorite.createManyAndReturn({
-   *   select: { userId: true },
+   * // Create many Favorites and only return the `id`
+   * const favoriteWithIdOnly = await prisma.favorite.createManyAndReturn({
+   *   select: { id: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -811,9 +844,9 @@ export interface FavoriteDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   ]
    * })
    * 
-   * // Update zero or more Favorites and only return the `userId`
-   * const favoriteWithUserIdOnly = await prisma.favorite.updateManyAndReturn({
-   *   select: { userId: true },
+   * // Update zero or more Favorites and only return the `id`
+   * const favoriteWithIdOnly = await prisma.favorite.updateManyAndReturn({
+   *   select: { id: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1017,6 +1050,7 @@ export interface Prisma__FavoriteClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Favorite model
  */
 export interface FavoriteFieldRefs {
+  readonly id: Prisma.FieldRef<"Favorite", 'Int'>
   readonly userId: Prisma.FieldRef<"Favorite", 'Int'>
   readonly quoteId: Prisma.FieldRef<"Favorite", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Favorite", 'DateTime'>

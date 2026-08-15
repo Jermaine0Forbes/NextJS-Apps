@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const StatusName = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type StatusName = (typeof StatusName)[keyof typeof StatusName]
+
+
 export const PlanName = {
   BRONZE: 'BRONZE',
   SILVER: 'SILVER',

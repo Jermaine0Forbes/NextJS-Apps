@@ -1021,6 +1021,7 @@ export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof Qu
 
 
 export const FavoriteScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
   quoteId: 'quoteId',
   createdAt: 'createdAt'
@@ -1041,6 +1042,9 @@ export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof Plan
 
 
 export const SubscriptionPlanScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  expirationDate: 'expirationDate',
   planId: 'planId',
   userId: 'userId',
   createdAt: 'createdAt'
@@ -1146,6 +1150,20 @@ export type EnumPlanNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'PlanName[]'
  */
 export type ListEnumPlanNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanName[]'>
+    
+
+
+/**
+ * Reference to a field of type 'StatusName'
+ */
+export type EnumStatusNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusName'>
+    
+
+
+/**
+ * Reference to a field of type 'StatusName[]'
+ */
+export type ListEnumStatusNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusName[]'>
     
 
 

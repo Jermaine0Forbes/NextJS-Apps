@@ -117,6 +117,7 @@ export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof Qu
 
 
 export const FavoriteScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
   quoteId: 'quoteId',
   createdAt: 'createdAt'
@@ -137,6 +138,9 @@ export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof Plan
 
 
 export const SubscriptionPlanScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  expirationDate: 'expirationDate',
   planId: 'planId',
   userId: 'userId',
   createdAt: 'createdAt'
