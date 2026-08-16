@@ -1,5 +1,5 @@
 import {faker} from "@faker-js/faker";
-import type {  UserUncheckedCreateInput, RoleCreateInput, QuoteCreateWithoutUserInput, PlanCreateInput } from "../prisma/models";
+import type {  UserUncheckedCreateInput, UserCreateInput, RoleCreateInput, QuoteCreateWithoutUserInput, RoleWhereUniqueInput } from "../prisma/models";
 import type {roles} from "@/app/lib/definitions";
 const { internet, helpers, lorem, date, number } = faker;
 
@@ -21,7 +21,7 @@ export function createMultiRole(names: roles[]): RoleCreateInput[]
    return roles;
 }
 
-export function createUser(index: number): UserUncheckedCreateInput
+export function createUser(index: number): UserCreateInput
 {
     let count: number = faker.number.int(20);
     const i : number = faker.number.int(index*100)
@@ -32,18 +32,20 @@ export function createUser(index: number): UserUncheckedCreateInput
     return {
         name: name+i,
         email: name+i+"@gmail.com",
-        roleId: role,
+        role: {
+            connect:{ id: role}
+        },
         createdAt: time,
         quotes: {
-            create:quotes
+            createMany:{data: quotes}
         },
     }
 }
 
-export function createMultiUsers(count: number): UserUncheckedCreateInput[]
+export function createMultiUsers(count: number = 0): UserCreateInput[]
 {
     let amount: number = count  > 0 ? count : faker.number.int(200);
-    const users :  UserUncheckedCreateInput[] = [];
+    const users :  UserCreateInput[] = [];
         while( amount > 0) {
         users.push(createUser(amount))
         amount--;
