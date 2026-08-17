@@ -32,6 +32,7 @@ export function createUser(index: number): UserCreateInput
     return {
         name: name+i,
         email: name+i+"@gmail.com",
+        password: ,
         role: {
             connect:{ id: role}
         },
