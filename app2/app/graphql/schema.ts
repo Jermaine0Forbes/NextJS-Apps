@@ -6,11 +6,20 @@ import { defaultFieldResolver, GraphQLSchema, GraphQLError } from "graphql";
 const typeDefs = /* GraphQL */ `
   directive @auth(requires: Role = USER) on FIELD_DEFINITION
 
-  enum Role {
+  enum RoleName {
     USER
     MODERATOR
     ADMIN
     SUPER_ADMIN
+  }
+
+  type Favorite {
+   quote: Quote!
+   user: User!
+  }
+
+  type Role {
+   name: RoleName!
   }
 
   type User {
@@ -20,84 +29,83 @@ const typeDefs = /* GraphQL */ `
     role: Role!
   }
 
-  type Post {
+  type Quote {
     id: ID!
-    title: String!
-    content: String!
+    message: String!
     published: Boolean!
-    author: User!
+    user: User!
+    favorites: [Favorite]
   }
 
   type Query {
     me: User @auth(requires: USER)
-    posts: [Post!]! @auth(requires: USER)
+    quotes: [Quote!]! @auth(requires: USER)
     allUsers: [User!]! @auth(requires: ADMIN)
   }
 
   type Mutation {
-    createPost(title: String!, content: String!): Post @auth(requires: USER)
-    deletePost(id: ID!): Boolean @auth(requires: ADMIN)
-    publishPost(id: ID!): Post @auth(requires: EDITOR)
+    createQuote(message: String!): Quote @auth(requires: USER)
+    deleteQuote(id: ID!): Boolean @auth(requires: ADMIN)
+   favQuote(quoteId:Number!, userId: Number!) Boolean @auth(requires: USER)
   }
 `;
 
 const roleOrder: Record<string, number> = { USER: 0, MODERATOR: 1, ADMIN: 2, SUPER_ADMIN: 4 };
 
 function authDirectiveTransformer(schema: GraphQLSchema) {
-  return mapSchema(schema, {
-    [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
-      const authDirective = getDirective(schema, fieldConfig, "auth")?.[0];
-      if (!authDirective) return fieldConfig;
+    return mapSchema(schema, {
+        [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
+            const authDirective = getDirective(schema, fieldConfig, "auth")?.[0];
+            if (!authDirective) return fieldConfig;
 
-      const requiredRole = authDirective.requires as keyof typeof roleOrder;
-      const { resolve = defaultFieldResolver } = fieldConfig;
+            const requiredRole = authDirective.requires as keyof typeof roleOrder;
+            const { resolve = defaultFieldResolver } = fieldConfig;
 
-      fieldConfig.resolve = async (source, args, context, info) => {
-        const user = context.user;
-        if (!user) {
-          throw new GraphQLError("Not authenticated", {
-            extensions: { code: "UNAUTHENTICATED" },
-          });
-        }
-        if (roleOrder[user.role] < roleOrder[requiredRole]) {
-          throw new GraphQLError("Not authorized", {
-            extensions: { code: "FORBIDDEN" },
-          });
-        }
-        return resolve(source, args, context, info);
-      };
-      return fieldConfig;
-    },
-  });
+            fieldConfig.resolve = async (source, args, context, info) => {
+                const user = context.user;
+                if (!user) {
+                    throw new GraphQLError("Not authenticated", {
+                        extensions: { code: "UNAUTHENTICATED" },
+                    });
+                }
+                if (roleOrder[user.role] < roleOrder[requiredRole]) {
+                    throw new GraphQLError("Not authorized", {
+                        extensions: { code: "FORBIDDEN" },
+                    });
+                }
+                return resolve(source, args, context, info);
+            };
+            return fieldConfig;
+        },
+    });
 }
 
 const resolvers = {
-  Query: {
-    me: (_: unknown, __: unknown, ctx: any) => ctx.user,
-    posts: (_: unknown, __: unknown, ctx: any) => {
-      // EDITOR/ADMIN see everything, USER only sees published posts
-      const where = ctx.user.role === "USER" ? { published: true } : {};
-      return ctx.prisma.post.findMany({ where, include: { author: true } });
+    Query: {
+        me: (parent: unknown, args: unknown, ctx: any) => ctx.user,
+        quotes: (parent: unknown, args: unknown, ctx: any) => {
+            // MODERATOR/ADMIN see everything, USER only sees published quotes
+            const where = ctx.user.role === "USER" ? { published: true } : {};
+            return ctx.prisma.quote.findMany({ where, include: { author: true } });
+        },
+        allUsers: (parent: unknown, args: unknown, ctx: any) => ctx.prisma.user.findMany(),
     },
-    allUsers: (_: unknown, __: unknown, ctx: any) => ctx.prisma.user.findMany(),
-  },
-  Mutation: {
-    createPost: (_: unknown, args: any, ctx: any) =>
-      ctx.prisma.post.create({
-        data: { ...args, authorId: ctx.user.id },
-        include: { author: true },
-      }),
-    deletePost: async (_: unknown, { id }: any, ctx: any) => {
-      await ctx.prisma.post.delete({ where: { id } });
-      return true;
+    Mutation: {
+        createQuote: (parent: unknown, args: any, ctx: any) =>
+            ctx.prisma.quote.create({
+                data: { ...args, authorId: ctx.user.id },
+                include: { author: true },
+            }),
+        deleteQuote: async (parent: unknown, { id }: any, ctx: any) => {
+            await ctx.prisma.quote.delete({ where: { id } });
+            return true;
+        },
+        favQuote: async (parent: unknown, { id }: any, ctx: any) => {
+            await ctx.prisma.quote.delete({ where: { id } });
+            return true;
+        },
+
     },
-    publishPost: (_: unknown, { id }: any, ctx: any) =>
-      ctx.prisma.post.update({
-        where: { id },
-        data: { published: true },
-        include: { author: true },
-      }),
-  },
 };
 
 let schema = makeExecutableSchema({ typeDefs, resolvers });
