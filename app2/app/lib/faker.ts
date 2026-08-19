@@ -1,6 +1,7 @@
 import {faker} from "@faker-js/faker";
 import type {  UserUncheckedCreateInput, UserCreateInput, RoleCreateInput, QuoteCreateWithoutUserInput, RoleWhereUniqueInput } from "../prisma/models";
 import type {roles} from "@/app/lib/definitions";
+import bcrypt from "bcryptjs";
 const { internet, helpers, lorem, date, number } = faker;
 
 export function createRole( role: roles):RoleCreateInput
@@ -12,8 +13,8 @@ export function createRole( role: roles):RoleCreateInput
 
 export function createMultiRole(names: roles[]): RoleCreateInput[]
 {
-  const roles: RoleCreateInput[] = [];
-
+    const roles: RoleCreateInput[] = [];
+    
    names.forEach((name) => {
      roles.push(createRole(name))
    })
@@ -25,14 +26,15 @@ export function createUser(index: number): UserCreateInput
 {
     let count: number = faker.number.int(20);
     const i : number = faker.number.int(index*100)
-    const time = date.recent();
     const quotes : QuoteCreateWithoutUserInput[] = createMultiQuotes(count);
+    const time = date.recent();
     const name = internet.username();
     const role = helpers.arrayElement([1,2,3,4]);
+    const pass = bcrypt.hashSync('password', 10);
     return {
         name: name+i,
         email: name+i+"@gmail.com",
-        password: ,
+        password: pass,
         role: {
             connect:{ id: role}
         },
