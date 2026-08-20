@@ -85,23 +85,23 @@ const resolvers = {
         me: (parent: unknown, args: unknown, ctx: any) => ctx.user,
         quotes: (parent: unknown, args: unknown, ctx: any) => {
             // MODERATOR/ADMIN see everything, USER only sees published quotes
-            const where = ctx.user.role === "USER" ? { published: true } : {};
-            return ctx.prisma.quote.findMany({ where, include: { author: true } });
+            // const where = ctx.user.role?.name === "USER" ? { published: true } : {};
+            return ctx.prisma.quote.findMany({  include: { user: true } });
         },
         allUsers: (parent: unknown, args: unknown, ctx: any) => ctx.prisma.user.findMany(),
     },
     Mutation: {
         createQuote: (parent: unknown, args: any, ctx: any) =>
             ctx.prisma.quote.create({
-                data: { ...args, authorId: ctx.user.id },
-                include: { author: true },
+                data: { ...args, userId: ctx.user.id },
+                include: { user: true },
             }),
         deleteQuote: async (parent: unknown, { id }: any, ctx: any) => {
             await ctx.prisma.quote.delete({ where: { id } });
             return true;
         },
-        favQuote: async (parent: unknown, { id }: any, ctx: any) => {
-            await ctx.prisma.quote.delete({ where: { id } });
+        favQuote: async (parent: unknown, { quoteId, userId }: any, ctx: any) => {
+            await ctx.prisma.favorite.create({ data: { quoteId, userId}});
             return true;
         },
 
