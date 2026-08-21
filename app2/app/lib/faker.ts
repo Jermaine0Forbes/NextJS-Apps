@@ -1,6 +1,6 @@
 import {faker} from "@faker-js/faker";
 import type {  UserUncheckedCreateInput, UserCreateInput, RoleCreateInput, QuoteCreateWithoutUserInput, RoleWhereUniqueInput } from "../prisma/models";
-import type {roles} from "@/app/lib/definitions";
+import type {roles} from "@/lib/definitions";
 import bcrypt from "bcryptjs";
 const { internet, helpers, lorem, date, number } = faker;
 
