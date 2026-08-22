@@ -68,7 +68,7 @@ function authDirectiveTransformer(schema: GraphQLSchema) {
                         extensions: { code: "UNAUTHENTICATED" },
                     });
                 }
-                if (roleOrder[user.role] < roleOrder[requiredRole]) {
+                if (roleOrder[user.role.name] < roleOrder[requiredRole]) {
                     throw new GraphQLError("Not authorized", {
                         extensions: { code: "FORBIDDEN" },
                     });
