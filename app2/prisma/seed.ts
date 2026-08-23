@@ -1,7 +1,7 @@
-import { PrismaClient, Prisma } from "@/app/prisma/client";
+import { PrismaClient, Prisma } from "@/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
-import { createMultiUsers, createMultiRole } from "@/app/lib/faker";
+import { createMultiUsers, createMultiRole } from "@/lib/faker";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
