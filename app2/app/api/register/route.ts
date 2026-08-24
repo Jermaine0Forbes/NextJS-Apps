@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
         name,
         email,
         password: hashed ,
-        role:{ create: {
-            name: "USER"
+        role:{ connect: {
+            id: 1
         }},
       },
       include:{
