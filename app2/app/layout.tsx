@@ -4,6 +4,8 @@ import "./globals.css";
 import { Theme } from "@radix-ui/themes";
 import { checkPermissions } from "./lib/db";
 
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

@@ -1,6 +1,6 @@
 
 
-export async function registerUser()
+export async function registerUser(e:unknown)
 {
-    
+    console.log(e)
 }
