@@ -3,11 +3,13 @@
 import { Button, TextField, Container, Card } from "@radix-ui/themes";
 import { registerUser } from "@/actions/user";
 import { useState } from "react";
+import Nav from "@/components/nav";
 export default function RegisterPage() {
     const [name, setName] = useState<string>("user1");
     const [email, setEmail] = useState<string>("user1@example.com");
     return (
         <main className="h-screen bg-gray-100">
+            <Nav/>
             <Container size={"1"} className="py-5">
                 <Card>
                     <h1 className="text-lg capitalize mb-4">register</h1>
