@@ -86,7 +86,7 @@ const resolvers = {
         quotes: (parent: unknown, args: unknown, ctx: any) => {
             // MODERATOR/ADMIN see everything, USER only sees published quotes
             // const where = ctx.user.role?.name === "USER" ? { published: true } : {};
-            return ctx.prisma.quote.findMany({  include: { user: true } });
+            return ctx.prisma.quote.findMany({ include: { user: true } });
         },
         allUsers: (parent: unknown, args: unknown, ctx: any) => ctx.prisma.user.findMany(),
     },
@@ -101,7 +101,7 @@ const resolvers = {
             return true;
         },
         favQuote: async (parent: unknown, { quoteId, userId }: any, ctx: any) => {
-            await ctx.prisma.favorite.create({ data: { quoteId, userId}});
+            await ctx.prisma.favorite.create({ data: { quoteId, userId } });
             return true;
         },
 

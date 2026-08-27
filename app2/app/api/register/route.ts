@@ -5,32 +5,40 @@ import { signToken } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   const { name, email, password } = await req.json();
-
+        console.log(email)
+        let token = null;
   try  {
       if( name == "" || password == "") throw new Error("some fields are missing");
-      if( !email.include('@')) throw new Error("not a valid email address");
+      if( !email.includes('@')) throw new Error("not a valid email address");
 
 
-      const userExists = await prisma.user.findFirst({ where:{ OR:[ { email: email }, { name:name}]}});
-      if (userExists ) {
-        return NextResponse.json({ error: "Name or email already exists" }, { status: 401 });
-      }
-       const hashed = await bcrypt.hash(password, 10);
-      const user = await prisma.user.create({ data:{
-        name,
-        email,
-        password: hashed ,
-        role:{ connect: {
-            id: 1
-        }},
-      },
-      include:{
-        role:true
-      }
-    })
+     await prisma.$transaction(async (tx) =>{
+
+         const userExists = await tx.user.findFirst({ where:{ OR:[ { email: email }, { name:name}]}});
+         if (userExists ) {
+           return NextResponse.json({ error: "Name or email already exists" }, { status: 401 });
+         }
+          const hashed = await bcrypt.hash(password, 10);
+         const user = await tx.user.create({ data:{
+           name,
+           email,
+           password: hashed ,
+           role:{ connect: {
+               id: 1
+           }},
+         },
+         include:{
+           role:true
+         }
+       })
+      token = signToken({ id: user.id, name:user.name, email: user.email, role: user.role });
+
     
-      const token = signToken({ id: user.id, name:user.name, email: user.email, role: user.role });
+
+     })
     
+    if (token == null ) throw new Error("jwt token is null");
+
       const res = NextResponse.json({ ok: true });
       res.cookies.set("token", token, {
         httpOnly: true,

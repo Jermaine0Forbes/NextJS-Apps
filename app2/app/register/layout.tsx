@@ -1,13 +1,12 @@
+import Nav from "@/components/nav";
 import "@radix-ui/themes/styles.css";
 export default function RegisterLayout({ children }: { children: React.ReactNode}) {
   return (
-    <html
-      lang="en"
-      className={`h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
+    <>
+     <header>
+        <Nav/>
+     </header>
           {children}
-      </body>
-    </html>
+    </>
   );
 }

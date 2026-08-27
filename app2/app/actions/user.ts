@@ -1,13 +1,13 @@
 
 
-export async function registerUser(e:FormData)
+export async function registerUser(prevstate: object, e:FormData)
 {
     // const data = new FormData(e);
     const data = JSON.stringify(Object.fromEntries(e));
 
     console.log(data)
 
-    await fetch("/api/register", {
+   return  await fetch("/api/register", {
         method: "POST",
         body: data
     })

@@ -2,11 +2,14 @@
 import jwt from "jsonwebtoken";
 import { prisma } from "./db";
 import {SessionUser} from "./definitions";
+import "dotenv/config";
 
-const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
 
 
 export function signToken(user: SessionUser) {
+  console.log("jwt")
+  console.log(JWT_SECRET)
   return jwt.sign(user, JWT_SECRET, { expiresIn: "7d" });
 }
 
