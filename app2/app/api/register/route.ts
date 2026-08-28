@@ -31,7 +31,18 @@ export async function POST(req: NextRequest) {
            role:true
          }
        })
+    
       token = signToken({ id: user.id, name:user.name, email: user.email, role: user.role });
+
+      await tx.session.create({data:{
+        sessionToken: token,
+        user: {
+            connect:{
+                id: user.id
+            }
+        },
+        expires: new Date(Date.now()+ 7 * 24 * 60 * 60 * 1000),
+      }})
 
     
 
@@ -51,7 +62,7 @@ export async function POST(req: NextRequest) {
 
   } catch(e:unknown) {
     if(e instanceof Error){
-
+            
         console.error(e.message)
         return NextResponse.json({ error: e?.message }, { status: 401 });
     }
