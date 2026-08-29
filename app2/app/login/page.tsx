@@ -4,6 +4,7 @@ import { Button, TextField, Container, Card } from "@radix-ui/themes";
 import { registerUser } from "@/actions/user";
 import { useState, useActionState } from "react";
 
+
 export default function LoginPage() {
     const [name, setName] = useState<string>("user1");
     const [ state, action, pending] = useActionState(registerUser, {})

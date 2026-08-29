@@ -15,3 +15,4 @@
 - integrate stripe with plans
 - add schedule tasks
 - use socket.io for something
+- create an environment variable for jwt token day expiration

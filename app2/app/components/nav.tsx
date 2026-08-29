@@ -6,9 +6,12 @@ export default function Nav() {
         <Flex className="bg-white py-2 border   border-gray-100 border-b-gray-500">
             <Box className="px-3">
                 <Link href="/login">Login</Link>
-            </Box>           
-             <Box className="px-3">
+            </Box>
+            <Box className="px-3">
                 <Link href="/register">Register</Link>
+            </Box>
+            <Box className="px-3">
+                <Link href="/logout">Logout</Link>
             </Box>
         </Flex>
     );
