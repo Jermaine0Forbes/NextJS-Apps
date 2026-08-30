@@ -5,6 +5,11 @@
 - ~~generate fake data for the tables~~
 - ~~add graphql as api method~~
 - add login/registration logic
+    - create logout functionality
+    - verify if logout works
+    - create dashboard for admin
+    - verify if login works
+    - verify if only admin can access admin dashboard and users can only access dashboard
 - pull quotes data to page
 - reset or re-seed data
 - do crud operations on quotes

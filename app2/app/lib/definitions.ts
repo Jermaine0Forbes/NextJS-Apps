@@ -10,3 +10,11 @@ export interface SessionUser {
 export interface Role {
     name: roles
 }
+
+export type JWTPayload = {
+  payload: SessionUser
+  protectedHeader:{
+    alg: string, 
+    typ?: string | undefined
+  }
+}
