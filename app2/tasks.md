@@ -6,6 +6,7 @@
 - ~~add graphql as api method~~
 - add login/registration logic
     - create logout functionality
+    - make logout button and functionality work
     - verify if logout works
     - create dashboard for admin
     - verify if login works
