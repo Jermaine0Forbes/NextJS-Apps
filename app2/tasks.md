@@ -7,6 +7,7 @@
 - add login/registration logic
     - create logout functionality
     - make logout button and functionality work
+    - create logout link component
     - verify if logout works
     - create dashboard for admin
     - verify if login works

@@ -1,9 +1,12 @@
+"use client"
 import { Flex, Box } from "@radix-ui/themes";
 import Link from "next/link";
 import { cookies } from 'next/headers'
 import { jwtVerify } from "jose"; // edge-compatible
 import  {JWTPayload} from "@/lib/definitions";
 import { useState, useEffect} from "react"
+import { logoutUser } from "@/actions/user";
+
 export default async function Nav() {
     const c = await cookies();
     const token = c.get("token")?.value as string;
@@ -11,13 +14,13 @@ export default async function Nav() {
     const [logout, setLogout] = useState(false);
 
     useEffect(() => {
-        if(logout){
-            (async () => {
-                fetch("api/logout", {
-                    method: "POST"
-                });
 
-            })()
+        const onLogout = async () => {
+            await logoutUser();
+        };
+        
+        if(logout){
+          onLogout();
         }
     }, [logout])
     //   console.log("jwt payload")
