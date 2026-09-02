@@ -1,28 +1,18 @@
-"use client"
+
 import { Flex, Box } from "@radix-ui/themes";
 import Link from "next/link";
 import { cookies } from 'next/headers'
 import { jwtVerify } from "jose"; // edge-compatible
 import  {JWTPayload} from "@/lib/definitions";
-import { useState, useEffect} from "react"
-import { logoutUser } from "@/actions/user";
+// import { useState, useEffect} from "react"
+// import { logoutUser } from "@/actions/user";
+import LogoutLink from "./logout-link";
 
 export default async function Nav() {
     const c = await cookies();
     const token = c.get("token")?.value as string;
     const  {payload: {name}} : JWTPayload = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET_KEY));
-    const [logout, setLogout] = useState(false);
 
-    useEffect(() => {
-
-        const onLogout = async () => {
-            await logoutUser();
-        };
-        
-        if(logout){
-          onLogout();
-        }
-    }, [logout])
     //   console.log("jwt payload")
     //   console.log(payload)
     return (
@@ -44,7 +34,7 @@ export default async function Nav() {
                 <Link href="/register">Register</Link>
             </Box>
             <Box className="px-3">
-                <Link href="#" onClick={() => setLogout(true)}>Logout</Link>
+                <LogoutLink/>
             </Box>
         </Flex>
     );
