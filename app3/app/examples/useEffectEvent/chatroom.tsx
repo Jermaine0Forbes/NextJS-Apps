@@ -1,14 +1,19 @@
 import { useEffect, useEffectEvent, useState } from "react";
 
-export default function useEffectEventPage()
+export function ChatRoom()
 {
-    const [roomId, setRoomId] = useState();
+        const [roomId, setRoomId] = useState();
     const [theme, setTheme] = useState();
 
     function createConnection(roomId: number){
+        let state: boolean = false;
         return {
-            on : () => ( true)
-        }
+            state,
+            on: (status: string, cb: () => void): void => { if(status == "connected" && state == true) cb();},
+           connect: () => ( state = true),
+            get disconnect () => (this.state = false),
+            
+        };
     }
     function ChatRoom({ roomId, theme }) {
   const onConnected = useEffectEvent(() => {
@@ -25,9 +30,9 @@ export default function useEffectEventPage()
     return () => connection.disconnect();
   }, [roomId]);
 }
-    return(
-        <main>
 
-        </main>
-    )
+ return (
+    <p>something</p>
+ )
+
 }

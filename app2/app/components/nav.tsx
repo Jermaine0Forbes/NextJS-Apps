@@ -10,8 +10,12 @@ import LogoutLink from "./logout-link";
 
 export default async function Nav() {
     const c = await cookies();
+    let name = null;
     const token = c.get("token")?.value as string;
-    const  {payload: {name}} : JWTPayload = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET_KEY));
+    if(token){
+        const  {payload} : JWTPayload = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET_KEY));
+        name = payload.name;
+    }
 
     //   console.log("jwt payload")
     //   console.log(payload)

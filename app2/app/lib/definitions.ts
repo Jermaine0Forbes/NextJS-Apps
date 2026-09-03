@@ -18,3 +18,8 @@ export type JWTPayload = {
     typ?: string | undefined
   }
 }
+
+export type authResponse = {
+    ok?:boolean
+    error?: string
+};

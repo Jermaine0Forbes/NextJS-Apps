@@ -5,11 +5,12 @@
 - ~~generate fake data for the tables~~
 - ~~add graphql as api method~~
 - add login/registration logic
-    - create logout functionality
-    - make logout button and functionality work
-    - create logout link component
-    - verify if logout works
-    - create dashboard for admin
+    - create logout functionality~~
+    - make logout button and functionality work~~
+    - create logout link component~~
+    - verify if logout works~~
+    - create dashboard for admin~~
+    - redirect user after login
     - verify if login works
     - verify if only admin can access admin dashboard and users can only access dashboard
 - pull quotes data to page

@@ -1,13 +1,14 @@
 "use client"
 
 import { Button, TextField, Container, Card } from "@radix-ui/themes";
-import { registerUser } from "@/actions/user";
+import { loginUser} from "@/actions/user";
 import { useState, useActionState } from "react";
+import { authResponse } from "@/lib/definitions";
 
-
+const initState: authResponse = { ok: false}
 export default function LoginPage() {
     const [name, setName] = useState<string>("user1");
-    const [ state, action, pending] = useActionState(registerUser, {})
+    const [ state, action, pending] = useActionState(loginUser, initState)
     console.log("state")
     console.log(state)
     return (

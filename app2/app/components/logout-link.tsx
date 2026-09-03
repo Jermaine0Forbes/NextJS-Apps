@@ -1,7 +1,8 @@
 "use client"
 import { useState, useEffect} from "react"
 import { logoutUser } from "@/actions/user";
-import Link from "next/link";
+// import Link from "next/link";
+import { Button, TextField, Container, Card } from "@radix-ui/themes";
 
 
 export default function LogoutLink()
@@ -19,6 +20,6 @@ export default function LogoutLink()
         }
     }, [logout])
     return(
-        <Link href="#" onClick={() => setLogout(true)}>Logout</Link>
+        <Button onClick={() => setLogout(true)}>Logout</Button>
     )
 }
