@@ -14,10 +14,9 @@ export async function registerUser(prevstate: object, e: FormData) {
         .catch(res => console.error(res.message))
 }
 
-export async function loginUser(prevState: object, e: FormData)
-{
-    
-        const data = JSON.stringify(Object.fromEntries(e));
+export async function loginUser(prevState: object, e: FormData) {
+
+    const data = JSON.stringify(Object.fromEntries(e));
 
     console.log(data)
 
@@ -26,13 +25,19 @@ export async function loginUser(prevState: object, e: FormData)
         body: data
     })
         .then(res => res.json())
-        .then( res => {
-            if( ["ADMIN", "SUPER_ADMIN"].includes(res.user.role.name) )
-           {
-            redirect("/admin")
-           }
+        .then(res => {
+            if (!res?.ok) return res;
+
+            console.log("fetch returned")
+            console.log(res)
+
+            if (["ADMIN", "SUPER_ADMIN"].includes(res.user.role.name)) {
+                redirect("/admin");
+            }
+
+            redirect("/dashboard");
         })
-        .catch(res => console.error(res.message))
+        .catch(res => console.error(res))
 }
 
 export async function logoutUser() {

@@ -7,7 +7,7 @@ import { authResponse } from "@/lib/definitions";
 
 const initState: authResponse = { ok: false}
 export default function LoginPage() {
-    const [name, setName] = useState<string>("user1");
+    const [email, setEmail] = useState<string>("user1@example.com");
     const [ state, action, pending] = useActionState(loginUser, initState)
     console.log("state")
     console.log(state)
@@ -18,10 +18,10 @@ export default function LoginPage() {
                     <h1 className="text-lg capitalize mb-4">Login</h1>
                     <form action={action}>
                         <TextField.Root
-                            name="name"
-                            placeholder="enter name..."
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            name="email"
+                            placeholder="enter email..."
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className="mb-4"
                         />
                         <TextField.Root name="password" defaultValue={"password123!"} className="mb-4" />

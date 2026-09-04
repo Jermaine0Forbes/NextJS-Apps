@@ -8,10 +8,13 @@ export async function POST(req: NextRequest) {
 
   const user = await prisma.user.findUnique({ where: { email }, include: {role:true} });
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    return NextResponse.json({ ok: false,  error: "Invalid credentials" }, { status: 401 });
   }
   const sessionUser = { id: user.id, name:user.name, email: user.email, role: user.role }
   const token = signToken(sessionUser);
+
+  console.log("Login successful")
+  console.log(sessionUser)
 
   const res = NextResponse.json({ ok: true, user: sessionUser });
   res.cookies.set("token", token, {

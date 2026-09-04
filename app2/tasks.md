@@ -5,7 +5,7 @@
 - ~~generate fake data for the tables~~
 - ~~add graphql as api method~~
 - add login/registration logic
-    - create logout functionality~~
+    - ~~create logout functionality~~
     - make logout button and functionality work~~
     - create logout link component~~
     - verify if logout works~~

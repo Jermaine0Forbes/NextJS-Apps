@@ -1,21 +1,29 @@
 import { useEffect, useEffectEvent, useState } from "react";
+import {AlertDialog} from "radix-ui";
 
 export function ChatRoom()
 {
-        const [roomId, setRoomId] = useState();
-    const [theme, setTheme] = useState();
+      const [roomId, setRoomId] = useState<number>(0);
+    const [theme, setTheme] = useState("light");
+
+    function showNotification(msg:string, theme: string)
+    {
+
+    }
 
     function createConnection(roomId: number){
         let state: boolean = false;
+        let id: number = roomId;
         return {
             state,
-            on: (status: string, cb: () => void): void => { if(status == "connected" && state == true) cb();},
-           connect: () => ( state = true),
-            get disconnect () => (this.state = false),
+            id,
+            setId(num: number){this.id = num},
+            on(status: string, cb: () => void): void { if(status == "connected" && this.state == true) cb();},
+           connect() { this.state = true},
+           disconnect() {this.state = false},
             
         };
     }
-    function ChatRoom({ roomId, theme }) {
   const onConnected = useEffectEvent(() => {
     showNotification("Connected!", theme);
   });
@@ -29,7 +37,6 @@ export function ChatRoom()
 
     return () => connection.disconnect();
   }, [roomId]);
-}
 
  return (
     <p>something</p>
