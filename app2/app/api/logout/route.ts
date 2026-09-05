@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { redirect, RedirectType } from 'next/navigation';
 import { JWTPayload, SessionUser } from "@/lib/definitions";
 import { getUserFromToken } from "@/lib/auth";
 
@@ -22,7 +23,8 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ ok: false, error: "user is not signed in" }, { status: 401 });
         }
         console.log('Logged out successfully')
-        return NextResponse.redirect(new URL("/", req.url), 302);
+       
+        // return NextResponse.redirect(new URL("/", req.url), 302);
 
     } catch (e) {
         if (e instanceof Error) {
@@ -32,6 +34,9 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ error: e });
     }
+
+    //  redirect("/", RedirectType.replace);
+     return  NextResponse.redirect(new URL("/register", req.url), 308);
 
 
 }

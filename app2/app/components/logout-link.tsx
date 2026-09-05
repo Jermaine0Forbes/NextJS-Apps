@@ -20,6 +20,6 @@ export default function LogoutLink()
         }
     }, [logout])
     return(
-        <Button onClick={() => setLogout(true)}>Logout</Button>
+        <Button loading={logout} onClick={() => setLogout(true)}>Logout</Button>
     )
 }
