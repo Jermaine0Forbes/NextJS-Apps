@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { cookies } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 import { JWTPayload, SessionUser } from "@/lib/definitions";
 import { getUserFromToken } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
+    
 
     try {
 
@@ -15,8 +17,10 @@ export async function POST(req: NextRequest) {
                 if(await tx.session.count() > 0){
                     await tx.session.delete({ where: { sessionToken: token } })
                 }
-                const result = req.cookies.delete("token");
-                console.log("token deleted? "+ result);
+                const cookie = await cookies();
+                const result = cookie.delete("token");
+                console.log(result)
+                // console.log("token deleted? "+ result);
             });
 
         } else {
@@ -36,7 +40,7 @@ export async function POST(req: NextRequest) {
     }
 
     //  redirect("/", RedirectType.replace);
-     return  NextResponse.redirect(new URL("/register", req.url), 308);
+     return  NextResponse.redirect(new URL("/", req.url), 302);
 
 
 }

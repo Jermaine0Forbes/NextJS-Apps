@@ -1,5 +1,6 @@
 import { useEffect, useEffectEvent, useState } from "react";
-import {AlertDialog} from "radix-ui";
+import {AlertDialog, Switch} from "radix-ui";
+import { Flex} from "radix-ui/themes";
 
 export function ChatRoom()
 {
@@ -39,7 +40,19 @@ export function ChatRoom()
   }, [roomId]);
 
  return (
-    <p>something</p>
+    <section>
+      <AlertDialog.Root>
+        <AlertDialog.Trigger>
+          <Flex>
+            {theme}:
+          <Switch defaultChecked />
+          </Flex>
+        </AlertDialog.Trigger>
+        <AlertDialog.Content maxWidth="450">
+          <AlertDialog.Title>Notification Room: {roomId}</AlertDialog.Title>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+    </section>
  )
 
 }

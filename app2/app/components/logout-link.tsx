@@ -3,16 +3,20 @@ import { useState, useEffect} from "react"
 import { logoutUser } from "@/actions/user";
 // import Link from "next/link";
 import { Button, TextField, Container, Card } from "@radix-ui/themes";
+import { useRouter } from 'next/navigation';
 
 
 export default function LogoutLink()
 {
         const [logout, setLogout] = useState(false);
+        const router = useRouter();
 
     useEffect(() => {
 
         const onLogout = async () => {
-            await logoutUser();
+          const result =  await logoutUser();
+          if(result.ok && result.redirected) router.push("/");
+
         };
         
         if(logout){

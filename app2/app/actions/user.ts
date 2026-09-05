@@ -1,4 +1,5 @@
-import { redirect } from 'next/navigation';
+import { redirect} from 'next/navigation';
+
 
 export async function registerUser(prevstate: object, e: FormData) {
     // const data = new FormData(e);
@@ -40,8 +41,13 @@ export async function loginUser(prevState: object, e: FormData) {
 }
 
 export async function logoutUser() {
-    await fetch("api/logout", {
+   const resp =  await fetch("api/logout", {
         method: "POST"
     });
+
+    // const c = await cookies();
+    // if(c.get("token")) c.delete("token");
+
+    return resp.json();
 
 }

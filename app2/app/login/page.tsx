@@ -2,7 +2,7 @@
 
 import { Button, TextField, Container, Card } from "@radix-ui/themes";
 import { loginUser} from "@/actions/user";
-import { useState, useActionState } from "react";
+import { useState, useActionState, useEffect } from "react";
 import { authResponse } from "@/lib/definitions";
 
 const initState: authResponse = { ok: false}
@@ -11,6 +11,12 @@ export default function LoginPage() {
     const [ state, action, pending] = useActionState(loginUser, initState)
     console.log("state")
     console.log(state)
+
+    useEffect(() => {
+        if(state?.user){
+            
+        }
+    },[state])
     return (
         <main className="h-screen bg-gray-100">
             <Container size={"1"} className="py-5">
