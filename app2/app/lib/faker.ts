@@ -30,7 +30,7 @@ export function createUser(index: number): UserCreateInput
     const time = date.recent();
     const name = internet.username();
     const role = helpers.arrayElement([1,2,3,4]);
-    const pass = bcrypt.hashSync('password', 10);
+    const pass = bcrypt.hashSync('password123!', 10);
     return {
         name: name+i,
         email: name+i+"@gmail.com",

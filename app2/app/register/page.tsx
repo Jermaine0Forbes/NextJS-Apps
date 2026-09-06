@@ -2,7 +2,7 @@
 
 import { Button, TextField, Container, Card } from "@radix-ui/themes";
 import { registerUser } from "@/actions/user";
-import { useState, useActionState } from "react";
+import { useState, useActionState, useEffect } from "react";
 
 type registerResponse = {
     ok?:boolean
@@ -15,6 +15,8 @@ export default function RegisterPage() {
     const [name, setName] = useState<string>("user1");
     const [email, setEmail] = useState<string>("user1@example.com");
     const [ state, action, pending] = useActionState(registerUser, initState)
+
+    
     console.log("state")
     console.log(state)
     return (

@@ -1,6 +1,5 @@
 import { useEffect, useEffectEvent, useState } from "react";
-import {AlertDialog, Switch} from "radix-ui";
-import { Flex} from "radix-ui/themes";
+import { Flex, Switch, AlertDialog} from "@radix-ui/themes";
 
 export function ChatRoom()
 {

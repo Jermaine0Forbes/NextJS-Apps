@@ -20,6 +20,7 @@ export async function middleware(req: NextRequest) {
         }
     }
     if (req.nextUrl.pathname.startsWith("/dashboard")) {
+        console.log("inside dashboard")
         const token = req.cookies.get("token")?.value;
         if (!token) return NextResponse.redirect(new URL("/login", req.url));
         try {

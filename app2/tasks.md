@@ -12,7 +12,6 @@
     - create dashboard for admin~~
     - redirect user after login
     - verify if login works
-    - verify if only admin can access admin dashboard and users can only access dashboard
 - pull quotes data to page
 - reset or re-seed data
 - do crud operations on quotes

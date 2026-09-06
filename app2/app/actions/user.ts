@@ -21,33 +21,20 @@ export async function loginUser(prevState: object, e: FormData) {
 
     console.log(data)
 
-    const resp = await fetch("/api/login", {
+    return await fetch("/api/login", {
         method: "POST",
         body: data
     })
         .then(res => res.json())
         .catch(res => console.error(res))
-
-    if (!resp?.ok) return resp;
-
-    console.log("fetch returned")
-    console.log(resp)
-
-    if (["ADMIN", "SUPER_ADMIN"].includes(resp.user.role.name)) {
-        redirect("/admin");
-    }
-
-    redirect("/dashboard");
 }
 
 export async function logoutUser() {
-   const resp =  await fetch("api/logout", {
+   return await fetch("api/logout", {
         method: "POST"
     });
 
-    // const c = await cookies();
-    // if(c.get("token")) c.delete("token");
 
-    return resp.json();
+
 
 }

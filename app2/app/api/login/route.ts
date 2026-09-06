@@ -13,6 +13,16 @@ export async function POST(req: NextRequest) {
   const sessionUser = { id: user.id, name:user.name, email: user.email, role: user.role }
   const token = signToken(sessionUser);
 
+  await prisma.session.create({data:{
+        sessionToken: token,
+        user: {
+            connect:{
+                id: user.id
+            }
+        },
+        expires: new Date(Date.now()+ 7 * 24 * 60 * 60 * 1000),
+      }});
+
   console.log("Login successful")
   console.log(sessionUser)
 

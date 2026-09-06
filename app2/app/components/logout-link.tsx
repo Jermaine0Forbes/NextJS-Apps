@@ -15,6 +15,8 @@ export default function LogoutLink()
 
         const onLogout = async () => {
           const result =  await logoutUser();
+          console.log("result")
+          console.log(result)
           if(result.ok && result.redirected) router.push("/");
 
         };

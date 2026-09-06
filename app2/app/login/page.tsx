@@ -1,22 +1,27 @@
 "use client"
 
 import { Button, TextField, Container, Card } from "@radix-ui/themes";
-import { loginUser} from "@/actions/user";
+import { loginUser } from "@/actions/user";
 import { useState, useActionState, useEffect } from "react";
 import { authResponse } from "@/lib/definitions";
+import { redirect } from "next/navigation";
 
-const initState: authResponse = { ok: false}
+const initState: authResponse = { ok: false }
 export default function LoginPage() {
     const [email, setEmail] = useState<string>("user1@example.com");
-    const [ state, action, pending] = useActionState(loginUser, initState)
+    const [state, action, pending] = useActionState(loginUser, initState)
     console.log("state")
     console.log(state)
 
     useEffect(() => {
-        if(state?.user){
-            
+        if (state?.user && state?.ok == true) {
+            const { user: { role } } = state
+            if (["ADMIN", "SUPER_ADMIN"].includes(role.name)) {
+                redirect("/admin");
+            }
+            redirect("/dashboard");
         }
-    },[state])
+    }, [state])
     return (
         <main className="h-screen bg-gray-100">
             <Container size={"1"} className="py-5">
