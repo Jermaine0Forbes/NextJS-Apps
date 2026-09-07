@@ -4,14 +4,7 @@
 - ~~create users, quotes, sessions,  roles, plans, subscription_plans db~~
 - ~~generate fake data for the tables~~
 - ~~add graphql as api method~~
-- add login/registration logic
-    - ~~create logout functionality~~
-    - make logout button and functionality work~~
-    - create logout link component~~
-    - verify if logout works~~
-    - create dashboard for admin~~
-    - redirect user after login
-    - verify if login works
+- ~~add login/registration logic~~
 - pull quotes data to page
 - reset or re-seed data
 - do crud operations on quotes
