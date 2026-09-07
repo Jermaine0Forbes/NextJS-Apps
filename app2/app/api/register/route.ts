@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { signToken } from "@/lib/auth";
+import { SessionUser } from "@/lib/definitions";
 
 export async function POST(req: NextRequest) {
   const { name, email, password } = await req.json();
         console.log(email)
         let token = null;
+        let sessionUser: SessionUser | null = null;
+        let redirectPath: string = "/";
   try  {
       if( name == "" || password == "") throw new Error("some fields are missing");
       if( !email.includes('@')) throw new Error("not a valid email address");
@@ -31,8 +34,8 @@ export async function POST(req: NextRequest) {
            role:true
          }
        })
-    
-      token = signToken({ id: user.id, name:user.name, email: user.email, role: user.role });
+      sessionUser = { id: user.id, name:user.name, email: user.email, role: user.role };
+      token = signToken(sessionUser);
 
       await tx.session.create({data:{
         sessionToken: token,
@@ -47,10 +50,16 @@ export async function POST(req: NextRequest) {
     
 
      })
-    
-    if (token == null ) throw new Error("jwt token is null");
+     if (token == null ) throw new Error("jwt token is null");
+     if (sessionUser == null || !("role" in sessionUser)) throw new Error("user does not exist or has a role");
+     if("role" in sessionUser)
+     {
+       const { role: {name}} = sessionUser;
+       redirectPath = ["ADMIN", "SUPER_ADMIN"].includes(name)? "/admin": "/dashboard";
 
-      const res = NextResponse.json({ ok: true });
+     }
+
+      const res = NextResponse.json({ ok: true, redirectPath });
       res.cookies.set("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

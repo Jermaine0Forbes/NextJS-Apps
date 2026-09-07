@@ -1,11 +1,11 @@
-import { useEffect, useEffectEvent, useState } from "react";
-
+import ResizeWindow from "../examples/useEffectEvent/resize-window";
 export default function Example1()
 {
 
     return(
         <main>
-          ex1
+          <h1>example 1</h1>
+           <ResizeWindow/>
         </main>
     )
 }

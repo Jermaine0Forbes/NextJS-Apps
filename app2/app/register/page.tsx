@@ -3,6 +3,7 @@
 import { Button, TextField, Container, Card } from "@radix-ui/themes";
 import { registerUser } from "@/actions/user";
 import { useState, useActionState, useEffect } from "react";
+import { redirect } from "next/navigation";
 
 type registerResponse = {
     ok?:boolean
@@ -16,7 +17,9 @@ export default function RegisterPage() {
     const [email, setEmail] = useState<string>("user1@example.com");
     const [ state, action, pending] = useActionState(registerUser, initState)
 
-    
+    useEffect(() => {
+        if(state?.ok ) redirect(state?.redirectPath);
+    },[state])
     console.log("state")
     console.log(state)
     return (
