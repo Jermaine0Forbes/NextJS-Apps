@@ -1,4 +1,3 @@
-import { redirect} from 'next/navigation';
 
 
 export async function registerUser(prevstate: object, e: FormData) {

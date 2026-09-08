@@ -6,13 +6,13 @@
 - ~~add graphql as api method~~
 - ~~add login/registration logic~~
 - pull quotes data to page
-- reset or re-seed data
 - do crud operations on quotes
+- reset or re-seed data
 - add rbac middleware 
 - deploy to vercel
-- add claude api or at least ai api
+- add claude api or at least ai api to create/generate quotes
 - create pages for users to choose subscriptions
 - integrate stripe with plans
 - add schedule tasks
-- use socket.io for something
+- use socket.io for (upvoting, receiving comments on quotes)
 - create an environment variable for jwt token day expiration

@@ -32,9 +32,9 @@ const typeDefs = /* GraphQL */ `
   type Quote {
     id: ID!
     message: String!
-    published: Boolean!
     user: User!
     favorites: [Favorite]
+    createdAt: DateTime
   }
 
   type Query {

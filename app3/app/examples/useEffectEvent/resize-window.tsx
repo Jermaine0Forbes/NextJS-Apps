@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useEffectEvent, useState } from "react";
-import { Flex, Box, Card, Text } from "@radix-ui/themes";
+import { Flex, Box, Card, Text, Button } from "@radix-ui/themes";
+import {EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 
 type modes = "small" | "medium" | "large" | "x-large" | "unknown";
 type sizes = "text-sm" | "text-base" | "text-lg" | "text-xl";
@@ -11,6 +12,7 @@ export default function ResizeWindow() {
   const [pixels, setPixels] = useState<number>(0)
   const [mode, setMode] = useState<modes>("unknown")
   const [textSize, setTextSize] = useState<sizes>("text-base");
+  const [open, setOpen] = useState(false);
 
   const handleUpdate = (_txt: sizes, _mode: modes, _bg: colors) => {
     setTextSize(_txt);
@@ -36,32 +38,49 @@ export default function ResizeWindow() {
         handleUpdate("text-sm", "small", "bg-rose-400")
         break;
       default:
-      handleUpdate("text-base", "unknown", "bg-gray-400")
+        handleUpdate("text-base", "unknown", "bg-gray-400")
     }
     setPixels(ws)
 
   });
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    if (open) {
+      window.addEventListener("resize", handleResize);
+    } else {
+      window.removeEventListener("resize", handleResize);
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [open]);
   return (
     <section className={bg + " h-screen"}>
-      <Box maxWidth="900" minWidth="500">
-      <Card  className="mx-auto" variant="classic">
-        <Flex gap="2">
-          <Box>
-            <Text className={textSize} weight="bold">Window is in {mode} mode.</Text>
-            <h2 > Size is currently {pixels} pixels</h2>
-          </Box>
+      <Box maxWidth="500" width="100%">
+        <Card className="mx-auto" variant="classic">
+          <Flex gap="2">
+            <Box>
+              <Text className={textSize} >Window is in {mode} mode.</Text>
+              <h2 > Size is currently {pixels} pixels</h2>
+            </Box>
 
-        </Flex>
-      </Card>
-
+          </Flex>
+          <Button size="2" variant="soft" onClick={() => setOpen(!open)}>
+            {
+              open ?
+                <>
+                  <EyeOpenIcon />
+                  Close window resizing
+                </>
+                :
+                <>
+                  <EyeClosedIcon />
+                  Detect window resizing
+                </>
+            }
+          </Button>
+        </Card>
       </Box>
     </section>
   )
