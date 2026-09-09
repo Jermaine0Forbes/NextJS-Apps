@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect,  useState } from "react";
 import { Flex, Box, Card, Text, Button } from "@radix-ui/themes";
 import {EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 
@@ -8,7 +8,7 @@ type modes = "small" | "medium" | "large" | "x-large" | "unknown";
 type sizes = "text-sm" | "text-base" | "text-lg" | "text-xl";
 type colors = "bg-rose-400" | "bg-fuchsia-400" | "bg-violet-400" | "bg-blue-400" | "bg-gray-400"
 
-export default function ResizeWindowAfter() {
+export default function ResizeWindowBefore() {
 
   // the visual states
   const [bg, setBg] = useState<colors>("bg-gray-400")
@@ -28,7 +28,7 @@ export default function ResizeWindowAfter() {
   }
 
   // the function that's called whenever the window size changes
-  const handleResize = useEffectEvent(() => {
+  const handleResize = () => {
     const widthSize = window.innerWidth;
     // console.log(widthSize);
     const ws = widthSize;
@@ -50,7 +50,7 @@ export default function ResizeWindowAfter() {
     }
     setPixels(ws)
 
-  });
+  };
 
   useEffect(() => {
     console.log("I'm inside the useEffect hook")
