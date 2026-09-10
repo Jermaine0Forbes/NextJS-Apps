@@ -16,8 +16,8 @@ export default function ResizeWindowBefore() {
   const [mode, setMode] = useState<modes>("unknown")
   const [textSize, setTextSize] = useState<sizes>("text-base");
  
-  // this toggles the eventlistener to be on/off
-  const [open, setOpen] = useState(false);
+  // this toggles handleResize to update the visual states
+  const [detect, setDetect] = useState(false);
 
 
   // changes all the visual states based on the current window size
@@ -29,42 +29,47 @@ export default function ResizeWindowBefore() {
 
   // the function that's called whenever the window size changes
   const handleResize = () => {
-    const widthSize = window.innerWidth;
-    // console.log(widthSize);
-    const ws = widthSize;
-    switch (true) {
-      case (ws >= 1400):
-        handleUpdate("text-xl", "x-large", "bg-blue-400")
-        break;
-      case (ws >= 1100):
-        handleUpdate("text-lg", "large", "bg-violet-400")
-        break;
-      case (ws >= 900):
-        handleUpdate("text-base", "medium", "bg-fuchsia-400")
-        break;
-      case (ws < 900):
-        handleUpdate("text-sm", "small", "bg-rose-400")
-        break;
-      default:
-        handleUpdate("text-base", "unknown", "bg-gray-400")
+    console.log("resize being called")
+    if(detect){
+        const widthSize = window.innerWidth;
+        const ws = widthSize;
+        switch (true) {
+          case (ws >= 1400):
+            handleUpdate("text-xl", "x-large", "bg-blue-400")
+            break;
+          case (ws >= 1100):
+            handleUpdate("text-lg", "large", "bg-violet-400")
+            break;
+          case (ws >= 900):
+            handleUpdate("text-base", "medium", "bg-fuchsia-400")
+            break;
+          case (ws < 900):
+            handleUpdate("text-sm", "small", "bg-rose-400")
+            break;
+          default:
+            handleUpdate("text-base", "unknown", "bg-gray-400")
+        }
+        setPixels(ws)
+
+    } else if( !detect && mode != "unknown")
+    {
+      handleUpdate("text-base", "unknown", "bg-gray-400")
+      setPixels(0);
+       window.removeEventListener("resize", handleResize);
     }
-    setPixels(ws)
 
   };
 
   useEffect(() => {
     console.log("I'm inside the useEffect hook")
-    // When the button is clicked to be true it will create the event to the window
-    if (open) {
+    // When the component is mounted this listener will created
       window.addEventListener("resize", handleResize);
-    } else {
-      window.removeEventListener("resize", handleResize);
-    }
+
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [open]);
+  }, [detect]);
   return (
     <section className={bg + " h-screen"}>
       <Box maxWidth="500" width="100%">
@@ -76,9 +81,9 @@ export default function ResizeWindowBefore() {
             </Box>
 
           </Flex>
-          <Button size="2" variant="soft" onClick={() => setOpen(!open)}>
+          <Button size="2" variant="soft" onClick={() => setDetect(!detect)}>
             {
-              open ?
+              detect ?
                 <>
                   <EyeOpenIcon />
                   Close window resizing

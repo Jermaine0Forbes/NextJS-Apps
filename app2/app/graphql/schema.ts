@@ -3,7 +3,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { mapSchema, getDirective, MapperKind } from "@graphql-tools/utils";
 import { defaultFieldResolver, GraphQLSchema, GraphQLError } from "graphql";
 
-const typeDefs = /* GraphQL */ `
+const typeDefs = `
   directive @auth(requires: Role = USER) on FIELD_DEFINITION
 
   enum RoleName {
@@ -34,7 +34,7 @@ const typeDefs = /* GraphQL */ `
     message: String!
     user: User!
     favorites: [Favorite]
-    createdAt: DateTime
+    createdAt: String
   }
 
   type Query {
@@ -46,7 +46,7 @@ const typeDefs = /* GraphQL */ `
   type Mutation {
     createQuote(message: String!): Quote @auth(requires: USER)
     deleteQuote(id: ID!): Boolean @auth(requires: ADMIN)
-   favQuote(quoteId:Number!, userId: Number!) Boolean @auth(requires: USER)
+   favQuote(quoteId:ID!, userId: ID!): Boolean @auth(requires: USER)
   }
 `;
 

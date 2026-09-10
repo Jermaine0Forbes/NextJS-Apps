@@ -23,10 +23,17 @@ export default async function Nav() {
         <Flex className="bg-white py-2 border   border-gray-100 border-b-gray-500">
             {
                 name && (
-
-                    <Box className="px-3">
-                        <h1> {name}</h1>
-                    </Box>
+                    <>
+                        <Box className="px-3">
+                            <h1> {name}</h1>
+                        </Box>
+                        <Box className="px-3">
+                            <Link href="/dashboard">Dashboard</Link>
+                        </Box>
+                        <Box className="px-3">
+                            <Link href="/quotes">Quotes</Link>
+                        </Box>
+                    </>
 
                 )
 
