@@ -1,16 +1,15 @@
 
 import { GET_QUOTES } from "@/graphql/requests";
-import { gqj } from "@/graphql/utils";
+import { gqj, get } from "@/graphql/utils";
 
 export async function getQuotes()
 {
-    const data =  gqj(GET_QUOTES);
-
-    return await fetch("/api/graphql", {
-        method: "POST",
+    const api =  get(GET_QUOTES);
+    console.log(api)
+    return await fetch(api, {
+        method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Accept": "application/graphql-response+json"
         },
-        body: data
     });
 }

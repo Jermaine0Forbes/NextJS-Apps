@@ -4,7 +4,7 @@ import { mapSchema, getDirective, MapperKind } from "@graphql-tools/utils";
 import { defaultFieldResolver, GraphQLSchema, GraphQLError } from "graphql";
 
 const typeDefs = `
-  directive @auth(requires: Role = USER) on FIELD_DEFINITION
+  directive @auth(requires: RoleName = USER) on FIELD_DEFINITION
 
   enum RoleName {
     USER
