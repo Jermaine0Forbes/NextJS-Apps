@@ -33,7 +33,6 @@ const typeDefs = `
     id: ID!
     message: String!
     user: User!
-    favorites: [Favorite]
     createdAt: String
   }
 
