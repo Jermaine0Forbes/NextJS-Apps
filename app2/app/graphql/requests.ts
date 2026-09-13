@@ -1,15 +1,16 @@
 export const GET_QUOTES = `
- query quotes{
+ query { quotes{
      id
      message
      user {
         id
         name
         email
-        role
+        role{
+         name
+        }
      }
-     favorites
      createdAt
     }
- 
+}
 `;

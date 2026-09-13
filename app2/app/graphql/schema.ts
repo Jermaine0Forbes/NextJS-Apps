@@ -2,9 +2,11 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { mapSchema, getDirective, MapperKind } from "@graphql-tools/utils";
 import { defaultFieldResolver, GraphQLSchema, GraphQLError } from "graphql";
+import { DateTimeResolver, DateTimeTypeDefinition } from "graphql-scalars";
 
 const typeDefs = `
   directive @auth(requires: RoleName = USER) on FIELD_DEFINITION
+   ${DateTimeTypeDefinition} # Declares 'scalar DateTime'
 
   enum RoleName {
     USER
@@ -26,14 +28,14 @@ const typeDefs = `
     id: ID!
     name: String!
     email: String!
-    role: Role!
+    role: Role
   }
 
   type Quote {
     id: ID!
     message: String!
     user: User!
-    createdAt: String
+    createdAt: DateTime
   }
 
   type Query {
@@ -80,12 +82,13 @@ function authDirectiveTransformer(schema: GraphQLSchema) {
 }
 
 const resolvers = {
+    DateTime: DateTimeResolver,
     Query: {
         me: (parent: unknown, args: unknown, ctx: any) => ctx.user,
         quotes: (parent: unknown, args: unknown, ctx: any) => {
             // MODERATOR/ADMIN see everything, USER only sees published quotes
             // const where = ctx.user.role?.name === "USER" ? { published: true } : {};
-            return ctx.prisma.quote.findMany({ include: { user: true } });
+            return ctx.prisma.quote.findMany({ include: { user: { include:{role: true} }} });
         },
         allUsers: (parent: unknown, args: unknown, ctx: any) => ctx.prisma.user.findMany(),
     },
