@@ -15,8 +15,6 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
   },
 });
 
-// export handler;
-// export { handler as GET, handler as POST };
 
 export async function GET(request: NextRequest) {
   return handler(request);

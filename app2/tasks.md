@@ -5,8 +5,9 @@
 - ~~generate fake data for the tables~~
 - ~~add graphql as api method~~
 - ~~add login/registration logic~~
-- pull quotes data to page
+- ~~pull quotes data to page~~
 - do crud operations on quotes
+- create the basic homepage
 - reset or re-seed data
 - add rbac middleware 
 - deploy to vercel

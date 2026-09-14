@@ -1,7 +1,7 @@
 "use client"
 import { getQuotes } from "@/actions/quote"
 import { useEffect, useState } from "react";
-import { Box, Card, Quote, Text, Flex } from "@radix-ui/themes";
+import { Box, Card, Quote, Text, Flex, Spinner } from "@radix-ui/themes";
 import { QuoteResponse, Quote as IQuote, Quotes } from "@/lib/definitions";
 
 
@@ -24,8 +24,8 @@ export default function QuoteList() {
         <section>
             <Box>
                 {
-                    Array.isArray(quotes) && quotes.length > 0 ?
-                        quotes?.map((e: IQuote, i: number) => (
+                    Array.isArray(quotes) && quotes.length > 0 &&
+                       ( quotes?.map((e: IQuote, i: number) => (
                             <Card key={i} className="mb-3">
                                 <Quote>{e.message}</Quote>
                                 <Flex>
@@ -35,9 +35,23 @@ export default function QuoteList() {
                                 <Text size="2">{(new Intl.DateTimeFormat('en-US', {dateStyle: "short"})).format( new Date(e.createdAt))}</Text>
                             </Card>
 
-                        ))
-                        :
+                        )))
+                        
+                }
+
+                {
+                    Array.isArray(quotes) && quotes.length == 0 && (
+
                         <p>There are no quotes at this time</p>
+
+                    )
+
+                }
+
+                {
+                    quotes === null && (
+                        <Spinner/>
+                    )
                 }
 
             </Box>

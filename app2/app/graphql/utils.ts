@@ -1,6 +1,5 @@
-import { encode } from "punycode";
 
-export function graphQLJson(query: string, variables: object | null = null, getRequest: boolean = true): string | Record<string,string> {
+export function graphQLJson(query: string, variables: object | null = null, getRequest: boolean = false): string | Record<string,string> {
     if (getRequest) {
         if (variables != null && Object.keys(variables).length > 0) {
             return {
