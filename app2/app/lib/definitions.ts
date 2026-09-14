@@ -23,3 +23,8 @@ export type authResponse = {
     ok?:boolean
     error?: string
 };
+
+export type QuoteResponse = {
+   errors?: Array<object>
+   data: Array<object>
+}
