@@ -11,6 +11,13 @@ export interface Role {
     name: roles
 }
 
+export interface Quote {
+  id: string,
+  message: string,
+  user: SessionUser,
+  createdAt: string
+}
+
 export type JWTPayload = {
   payload: SessionUser
   protectedHeader:{
@@ -26,5 +33,9 @@ export type authResponse = {
 
 export type QuoteResponse = {
    errors?: Array<object>
-   data: Array<object>
+   data: {
+    quotes: Array<Quote>
+   }
 }
+
+export type Quotes = Array<Quote>;
