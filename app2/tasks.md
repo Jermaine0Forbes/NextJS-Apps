@@ -10,6 +10,7 @@
     - pull quotes for a specific user in the dasboard page
     - add a create a quote on the dashboard page and create the form
     - create an edit quote page that allows you to either update or delete it
+    - view a specific quote
 - create the basic homepage
 - reset or re-seed data
 - add rbac middleware 

@@ -1,11 +1,12 @@
-import ResizeWindowBefore from "@/examples/useEffectEvent/resize-window-before"
-
+import ResizeWindow from "@/examples/useEffectEvent/resize-window"
+import { Heading } from "@radix-ui/themes";
 export default function Example2()
 {
 
     return(
         <main>
-         <ResizeWindowBefore/>
+            <Heading>With useEffectEvent</Heading>
+         <ResizeWindow/>
         </main>
     )
 }

@@ -8,7 +8,7 @@ type modes = "small" | "medium" | "large" | "x-large" | "unknown";
 type sizes = "text-sm" | "text-base" | "text-lg" | "text-xl";
 type colors = "bg-rose-400" | "bg-fuchsia-400" | "bg-violet-400" | "bg-blue-400" | "bg-gray-400"
 
-export default function ResizeWindowBefore() {
+export default function ResizeWindowBefore2() {
 
   // the visual states
   const [bg, setBg] = useState<colors>("bg-gray-400")
@@ -69,7 +69,7 @@ export default function ResizeWindowBefore() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [detect]);
   return (
     <section className={bg + " h-screen"}>
       <Box maxWidth="500" width="100%">

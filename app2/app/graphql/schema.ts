@@ -27,7 +27,7 @@ const typeDefs = `
   type User {
     id: ID!
     name: String!
-    email: String!
+    email: String
     role: Role
   }
 
@@ -42,7 +42,7 @@ const typeDefs = `
     me: User @auth(requires: USER)
     quotes: [Quote!]! @auth(requires: USER)
     allUsers: [User!]! @auth(requires: ADMIN)
-    userQuotes(userId: ID!): [Quote]  @auth(requires: USER)
+    userQuotes: [Quote]  @auth(requires: USER)
   }
 
   type Mutation {
@@ -92,7 +92,7 @@ const resolvers = {
             return ctx.prisma.quote.findMany({ include: { user: { include:{role: true} }} });
         },
         allUsers: (parent: unknown, args: unknown, ctx: any) => ctx.prisma.user.findMany(),
-        userQuotes: (parent: unknown, {userId}: any, ctx: any) => ( "foo")
+        userQuotes: (parent: unknown, args: unknown, ctx: any) => ( ctx.prisma.quote.findMany({where: {userId: ctx.user.id}}))
     },
     Mutation: {
         createQuote: (parent: unknown, args: any, ctx: any) =>

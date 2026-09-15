@@ -38,3 +38,15 @@ export function get(query: string, variables: object | null = null) {
 }
 
 export const gqj = graphQLJson;
+
+export function configRequest(query: string, variables: object | null = null): object
+{
+    const data = gqj(query, variables)
+   return {
+     method: "POST",
+     headers: {
+    "Content-Type": "application/json"
+     },
+     body: data,
+   }
+}

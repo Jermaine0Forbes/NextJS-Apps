@@ -14,3 +14,17 @@ export const GET_QUOTES = `
     }
 }
 `;
+
+
+export const GET_USER_QUOTES = `
+ query { userQuotes{
+     id
+     message
+     user {
+        id
+        name
+     }
+     createdAt
+    }
+}
+`;
