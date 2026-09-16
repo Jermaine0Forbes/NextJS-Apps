@@ -2,7 +2,7 @@
 import { getQuotes } from "@/actions/quote"
 import { useEffect, useState } from "react";
 import { Box, Card, Quote, Text, Flex, Spinner } from "@radix-ui/themes";
-import { QuoteResponse, Quote as IQuote, Quotes } from "@/lib/definitions";
+import { graphResponse, Quote as IQuote, Quotes, quotes as Tquotes } from "@/lib/definitions";
 
 
 export default function QuoteList() {
@@ -12,7 +12,7 @@ export default function QuoteList() {
             const result = await getQuotes();
             console.log(result)
             if (result.ok) {
-                const {data:{quotes}} : QuoteResponse = await result.json()
+                const {data:{quotes}} : graphResponse<Tquotes> = await result.json()
                 setQuotes(quotes)
             }
         }

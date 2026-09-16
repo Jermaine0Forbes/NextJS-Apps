@@ -31,14 +31,34 @@ export type authResponse = {
     error?: string
 };
 
-export type graphQueries  = "quotes" | "userQuotes" | "me" | "createQuote" | "deleteQuote";
+
 
 export type Quotes = Array<Quote>;
 
-export type QuoteResponse<T> = {
+export type quotes = {
+  quotes: Quotes
+}
+
+export type userQuotes =  {
+  userQuotes: Quotes
+}
+
+export type me = {
+  me: SessionUser
+}
+
+export type createQuote = {
+  createQuote : Quote
+}
+
+export type deleteQuote = {
+  deleteQuote : boolean
+}
+
+export type graphQueries  = quotes | userQuotes | me | createQuote | deleteQuote;
+
+export type graphResponse<T> = {
    errors?: Array<object>
-   data: {
-    quotes: Quotes
-   }
+   data: T
 }
 

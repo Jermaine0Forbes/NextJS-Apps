@@ -92,7 +92,12 @@ const resolvers = {
             return ctx.prisma.quote.findMany({ include: { user: { include:{role: true} }} });
         },
         allUsers: (parent: unknown, args: unknown, ctx: any) => ctx.prisma.user.findMany(),
-        userQuotes: (parent: unknown, args: unknown, ctx: any) => ( ctx.prisma.quote.findMany({where: {userId: ctx.user.id}}))
+        userQuotes: (parent: unknown, args: unknown, ctx: any) =>{  
+            // console.log(ctx.user.id)
+            const result = ctx.prisma.quote.findMany({where: {userId: ctx.user.id}, include: { user: { include:{role: true} }}});
+            console.log(result)
+             return result;
+            }
     },
     Mutation: {
         createQuote: (parent: unknown, args: any, ctx: any) =>
