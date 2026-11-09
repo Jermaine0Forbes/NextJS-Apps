@@ -1,0 +1,612 @@
+[
+  {
+    "id": "renameTable.User",
+    "label": "Rename table \"User\" to \"Critic\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Critic"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"User\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"User\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"User\""
+        }
+      },
+      {
+        "description": "ensure table \"Critic\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Critic\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename table \"User\" to \"Critic\"",
+        "sql": "ALTER TABLE \"public\".\"User\" RENAME TO \"Critic\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Critic\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Critic\""
+        }
+      },
+      {
+        "description": "verify table \"User\" no longer exists",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"User\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"User\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "primaryKey.public.Critic.User_pkey.rename",
+    "label": "Rename primary key \"User_pkey\" to \"Critic_pkey\" on \"Critic\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "primaryKey",
+        "name": "Critic_pkey",
+        "table": "Critic"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"User_pkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_pkey",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "constraint \"User_pkey\" on \"Critic\""
+        }
+      },
+      {
+        "description": "ensure constraint \"Critic_pkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Critic_pkey",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"Critic_pkey\" on \"Critic\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename primary key \"User_pkey\" to \"Critic_pkey\"",
+        "sql": "ALTER TABLE \"public\".\"Critic\" RENAME CONSTRAINT \"User_pkey\" TO \"Critic_pkey\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"Critic_pkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Critic_pkey",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "constraint \"Critic_pkey\" on \"Critic\""
+        }
+      },
+      {
+        "description": "verify constraint \"User_pkey\" no longer exists",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_pkey",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"User_pkey\" on \"Critic\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "unique.public.Critic.User_email_key.rename",
+    "label": "Rename unique constraint \"User_email_key\" to \"Critic_email_key\" on \"Critic\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "Critic_email_key",
+        "table": "Critic"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"User_email_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_email_key",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "constraint \"User_email_key\" on \"Critic\""
+        }
+      },
+      {
+        "description": "ensure constraint \"Critic_email_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Critic_email_key",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"Critic_email_key\" on \"Critic\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename unique constraint \"User_email_key\" to \"Critic_email_key\"",
+        "sql": "ALTER TABLE \"public\".\"Critic\" RENAME CONSTRAINT \"User_email_key\" TO \"Critic_email_key\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"Critic_email_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Critic_email_key",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "constraint \"Critic_email_key\" on \"Critic\""
+        }
+      },
+      {
+        "description": "verify constraint \"User_email_key\" no longer exists",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "User_email_key",
+          "public",
+          "\"public\".\"Critic\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"User_email_key\" on \"Critic\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.Post",
+    "label": "Drop table \"Post\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Post\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Post\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Post\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"Post\"",
+        "sql": "DROP TABLE \"public\".\"Post\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Post\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Post\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Post\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Movie",
+    "label": "Create table \"Movie\"",
+    "summary": "Creates table \"Movie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Movie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Movie\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Movie\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Movie\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Movie\"",
+        "sql": "CREATE TABLE \"public\".\"Movie\" (\n  \"createdAt\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"genre\" text,\n  \"id\" SERIAL NOT NULL,\n  \"title\" text NOT NULL,\n  \"updatedAt\" timestamptz(3) NOT NULL,\n  \"year\" int2 NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Movie\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Movie\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Movie\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.MovieReview",
+    "label": "Create table \"MovieReview\"",
+    "summary": "Creates table \"MovieReview\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "MovieReview"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"MovieReview\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"MovieReview\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"MovieReview\"",
+        "sql": "CREATE TABLE \"public\".\"MovieReview\" (\n  \"comment\" text,\n  \"createdAt\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"criticId\" int4 NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"movieId\" int4 NOT NULL,\n  \"rating\" int2 NOT NULL,\n  \"updatedAt\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"MovieReview\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"MovieReview\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "index.MovieReview.MovieReview_criticId_idx_49e45ff1",
+    "label": "Create index \"MovieReview_criticId_idx_49e45ff1\" on \"MovieReview\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieReview_criticId_idx_49e45ff1",
+        "table": "MovieReview"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieReview_criticId_idx_49e45ff1\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview_criticId_idx_49e45ff1\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieReview_criticId_idx_49e45ff1\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieReview_criticId_idx_49e45ff1\"",
+        "sql": "CREATE INDEX \"MovieReview_criticId_idx_49e45ff1\" ON \"public\".\"MovieReview\" (\"criticId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieReview_criticId_idx_49e45ff1\" exists on \"MovieReview\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview_criticId_idx_49e45ff1\"",
+          "i",
+          "I",
+          "\"public\".\"MovieReview\"",
+          "btree",
+          "[\"criticId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieReview.MovieReview_movieId_criticId_idx_cd499741",
+    "label": "Create index \"MovieReview_movieId_criticId_idx_cd499741\" on \"MovieReview\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieReview_movieId_criticId_idx_cd499741",
+        "table": "MovieReview"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieReview_movieId_criticId_idx_cd499741\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview_movieId_criticId_idx_cd499741\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieReview_movieId_criticId_idx_cd499741\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieReview_movieId_criticId_idx_cd499741\"",
+        "sql": "CREATE INDEX \"MovieReview_movieId_criticId_idx_cd499741\" ON \"public\".\"MovieReview\" (\"movieId\", \"criticId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieReview_movieId_criticId_idx_cd499741\" exists on \"MovieReview\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview_movieId_criticId_idx_cd499741\"",
+          "i",
+          "I",
+          "\"public\".\"MovieReview\"",
+          "btree",
+          "[\"movieId\",\"criticId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieReview.MovieReview_movieId_idx_8cb9f9db",
+    "label": "Create index \"MovieReview_movieId_idx_8cb9f9db\" on \"MovieReview\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieReview_movieId_idx_8cb9f9db",
+        "table": "MovieReview"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieReview_movieId_idx_8cb9f9db\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview_movieId_idx_8cb9f9db\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieReview_movieId_idx_8cb9f9db\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieReview_movieId_idx_8cb9f9db\"",
+        "sql": "CREATE INDEX \"MovieReview_movieId_idx_8cb9f9db\" ON \"public\".\"MovieReview\" (\"movieId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieReview_movieId_idx_8cb9f9db\" exists on \"MovieReview\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieReview_movieId_idx_8cb9f9db\"",
+          "i",
+          "I",
+          "\"public\".\"MovieReview\"",
+          "btree",
+          "[\"movieId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.MovieReview.MovieReview_criticId_fkey",
+    "label": "Add foreign key \"MovieReview_criticId_fkey\" on \"MovieReview\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "MovieReview_criticId_fkey",
+        "table": "MovieReview"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"MovieReview_criticId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "MovieReview_criticId_fkey",
+          "public",
+          "\"public\".\"MovieReview\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"MovieReview_criticId_fkey\" on \"MovieReview\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"MovieReview_criticId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"MovieReview\"\nADD CONSTRAINT \"MovieReview_criticId_fkey\"\nFOREIGN KEY (\"criticId\")\nREFERENCES \"public\".\"Critic\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"MovieReview_criticId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "MovieReview_criticId_fkey",
+          "public",
+          "\"public\".\"MovieReview\"",
+          "f",
+          "[\"criticId\"]",
+          "\"public\".\"Critic\"",
+          "[\"id\"]",
+          "a",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.MovieReview.MovieReview_movieId_fkey",
+    "label": "Add foreign key \"MovieReview_movieId_fkey\" on \"MovieReview\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "MovieReview_movieId_fkey",
+        "table": "MovieReview"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"MovieReview_movieId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "MovieReview_movieId_fkey",
+          "public",
+          "\"public\".\"MovieReview\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"MovieReview_movieId_fkey\" on \"MovieReview\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"MovieReview_movieId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"MovieReview\"\nADD CONSTRAINT \"MovieReview_movieId_fkey\"\nFOREIGN KEY (\"movieId\")\nREFERENCES \"public\".\"Movie\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"MovieReview_movieId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "MovieReview_movieId_fkey",
+          "public",
+          "\"public\".\"MovieReview\"",
+          "f",
+          "[\"movieId\"]",
+          "\"public\".\"Movie\"",
+          "[\"id\"]",
+          "a",
+          "a"
+        ]
+      }
+    ]
+  }
+]

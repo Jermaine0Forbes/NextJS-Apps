@@ -1,0 +1,34 @@
+// use prisma-8
+
+model Critic {
+  id        Int                @id @default(autoincrement())
+  email     String             @unique
+  username  String?
+  name      String?
+  movieReviews  MovieReview[]
+  createdAt DateTime           @default(now()) 
+  updatedAt temporal.UpdatedAt
+}
+
+model Movie {
+  id        Int                @id @default(autoincrement())
+  title     String
+  genre   String?
+  year  Int2
+  movieReviews MovieReview[]
+  createdAt DateTime           @default(now()) @onCreate(now())
+  updatedAt temporal.UpdatedAt
+}
+
+model MovieReview {
+  id        Int                @id @default(autoincrement())
+  rating  Int2
+  comment String?
+  criticId Int
+  movieId Int
+  critic  Critic   @relation(fields: [criticId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
+  createdAt DateTime      @default(now()) 
+  updatedAt temporal.UpdatedAt
+   @@index([movieId, criticId])
+}
