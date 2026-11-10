@@ -9,6 +9,7 @@ export default function DefaultNav()
                 <Link href="/" className="capitalize mx-2">example 1</Link>
                 <Link href="/ex2" className="capitalize mx-2">example 2</Link>
                 <Link href="/ex3" className="capitalize mx-2">example 3</Link>
+                <Link href="/seed" className="capitalize mx-2">seed</Link>
             </Flex>
         </nav>
     )
