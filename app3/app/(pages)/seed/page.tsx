@@ -3,7 +3,7 @@
 // import { output, seedData } from "@/prisma/db";
 // import { createCriticReviews} from '@/prisma/seeder';
 // import {use} from "react"
-import SeedBtn from "@/seed/seed-btn";
+import SeedBtn from "@/pages/seed/seed-btn";
 
 export default async function Seed()
 {
