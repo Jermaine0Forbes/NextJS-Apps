@@ -1,5 +1,12 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+
+# Things to do 
+
+- rework `findUniqueId` to include a second parameter that will have all the existing id's of a table so that `getUniqueArr` can actually pull from the list instead of a random number between 1-100.
+
+
+
 ## Getting Started
 
 First, run the development server:

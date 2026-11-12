@@ -1,14 +1,18 @@
-import { Heading, Em } from "@radix-ui/themes";
-import { output } from "@/prisma/db";
-import {x} from '@/prisma/seeder';
+"use server"
+// import { Heading, Em , Button} from "@radix-ui/themes";
+// import { output, seedData } from "@/prisma/db";
+// import { createCriticReviews} from '@/prisma/seeder';
+// import {use} from "react"
+import SeedBtn from "@/seed/seed-btn";
 
 export default async function Seed()
 {
-    await x();
+    // await createCriticReviews();
+    // const handleSeeding = async () =>  await seedData();
     // output();
     return (
         <main>
-            seeding data
+           <SeedBtn /> 
         </main>
     )
 }

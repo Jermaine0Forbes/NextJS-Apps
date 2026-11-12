@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Critic, Movie, MovieReview } from "@/lib/types";
+import { Critic, MovieJson, MovieReview } from "@/lib/types";
 const { internet, helpers, lorem, date, number: num } = faker;
 
 export function createCritics(amount: number = 1) {
@@ -28,9 +28,9 @@ export function createCritics(amount: number = 1) {
     )
 }
 
-export function createMovies(json: Array<Movie>) {
+export function createMovies(json: Array<MovieJson>) {
     return json.map((movie) => ({
-        title: movie.title,
+        title: movie.name,
         year: movie.year,
         genre: movie?.genre,
         createdAt: new Date(movie.year, 0, 1)
@@ -56,22 +56,23 @@ export async function getUniqueArr(arrLength:number) {
     return arr;
 }
 
-export async function x(userCount: number = 5) {
+export async function createCriticReviews(userCount: number = 5) {
     let movieIds: number[] = [];
     let movieReviews: MovieReview[] = []
     
-    console.log(movieIds.sort())
     for (let i = 0; i < userCount; i++) {
         let id = i + 1;
         let len = num.int({ min: 1, max: 10 });
-        console.log(`array amount: ${len}`);
+        // console.log(`array amount: ${len}`);
         movieIds = await getUniqueArr(len);
+        // console.log(movieIds.sort())
         let reviews = await createMovieReviews(movieIds, id)
         movieReviews = [...movieReviews, ...reviews]
     }
-    console.log('movie reviews')
-    console.log(movieReviews)
+    // console.log('movie reviews')
+    // console.log(movieReviews)
 
+    return movieReviews;
 }
 
 export async function createMovieReviews(movies: Array<number>, criticId: number) {
