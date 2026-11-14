@@ -2,7 +2,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 
 # Things to do 
-
+- create select component to include all the genre's
+- make search componet have full width, but select component have defined width
+- when searching or selecting it should trigger queryMovie action
+- add usedeferredvalue to show stale data when querying new data 
+- possibly add debouncing
 - rework `findUniqueId` to include a second parameter that will have all the existing id's of a table so that `getUniqueArr` can actually pull from the list instead of a random number between 1-100.
 
 

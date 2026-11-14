@@ -8,7 +8,7 @@ export type Critic = {
 
 export type Movie = {
     title: string,
-    genre: string,
+    genre: string | null,
     year: number,
     createdAt?: string,
 }

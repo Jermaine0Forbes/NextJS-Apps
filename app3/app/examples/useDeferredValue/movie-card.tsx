@@ -1,4 +1,4 @@
-import { Card, TextField, Container, Text, Flex } from "@radix-ui/themes"
+import { Card, TextField, Container, Text, Flex, Table } from "@radix-ui/themes"
 
 type MovieCardProps = {
     title: string, 
@@ -10,20 +10,15 @@ type MovieCardProps = {
 }
 
 export default function MovieCard({title, year, genre, rating, reviews}: MovieCardProps) {
+    const avgRating = typeof rating == "number" ? rating.toFixed(1) : 0;
     return (
-        <Card>
-            <Flex justify="between">
-                {/* <div><Text weight="bold">Movie</Text></div>
-                <div><Text weight="bold">Genre</Text></div>
-                <div><Text weight="bold">Year</Text></div>
-                <div><Text weight="bold">Rating</Text></div>
-                <div><Text weight="bold">Reviews</Text></div> */}
-                <div><Text weight="bold">{title}</Text></div>
-                <div><Text weight="bold">{genre}</Text></div>
-                <div><Text weight="bold">{year}</Text></div>
-                <div><Text weight="bold">{rating}</Text></div>
-                <div><Text weight="bold">{reviews}</Text></div>
-            </Flex>
-        </Card>
+        <Table.Row>
+            <Table.RowHeaderCell > <Text weight="bold">{title}</Text></Table.RowHeaderCell>
+            <Table.Cell><Text >{genre}</Text></Table.Cell>
+            <Table.Cell><Text>{year}</Text></Table.Cell>
+            <Table.Cell><Text >{avgRating}/5</Text></Table.Cell>
+            <Table.Cell><Text >{reviews}</Text></Table.Cell>
+        </Table.Row>
+
     )
 }
