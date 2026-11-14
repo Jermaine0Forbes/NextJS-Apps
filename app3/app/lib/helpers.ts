@@ -1,8 +1,8 @@
 import { NonNullProp } from "./types"
 
-export async function pluck<T> (column: string, data: Array<T>)
+export function pluck<T, K> (column: string, data: Array<T>): Array<K>
 {
-return data.map((item  ) => ( ( item as Record<string, unknown>)[column] !== null && ( item as Record<string, unknown>)[column] ))
+return data.map((item  ) => ( ( item as Record<string, K>)[column] ))
     
 }
 

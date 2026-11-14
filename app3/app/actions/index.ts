@@ -1,7 +1,7 @@
 "use server"
 import { db } from "@/prisma/db";
 import { pluck, replaceNull } from "@/lib/helpers";
-import { Critic, Movie } from "@/lib/types";
+import { Critic, Movie, MovieJson } from "@/lib/types";
 
 export async function searchMovies() {
    return await fetch('http:localhost:3000/api/search/movie?title=t&year=2014&genre=Drama')
@@ -20,10 +20,10 @@ export async function getUserNames() {
         'missing'
     );
 
-    return await pluck<Pick<Critic, "name">>('name', rows);
+    return pluck('name', rows);
 }
 
-export async function getGenres() {
+export async function getGenres(): Promise<Array<string>> {
     const rows = replaceNull(
         await db.orm.public.Movie
         .select('genre')
@@ -34,11 +34,11 @@ export async function getGenres() {
         'missing'
     );
 
-    return await pluck<Pick<Movie, 'genre'>>('genre', rows);
+    return  pluck('genre', rows);
 }
 
 export async function getMovieNames() {
-    return await pluck('title', await db.orm.public.Movie.select('title').all());
+    return pluck('title', await db.orm.public.Movie.select('title').all());
 }
 
 export async function queryMovies() {
