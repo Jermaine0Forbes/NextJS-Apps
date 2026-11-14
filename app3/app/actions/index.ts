@@ -3,10 +3,10 @@ import { db } from "@/prisma/db";
 import { pluck, replaceNull } from "@/lib/helpers";
 import { Critic, Movie, MovieJson } from "@/lib/types";
 
-export async function searchMovies() {
-   return await fetch('http:localhost:3000/api/search/movie?title=t&year=2014&genre=Drama')
+export async function searchMovies(params:string) {
+   return await fetch('http:localhost:3000/api/search/movie?'+params)
         .then(resp => resp.json())
-        .then(resp => console.log(resp))
+        .then(resp => resp)
         .catch(e => console.error(e))
 }
 

@@ -10,14 +10,9 @@ export async function GET(request: NextRequest) {
   const genre = searchParams.get('genre') ?? null;
 
   const whereArgs = (f: any, fns: any) => fns.and(...[
-    ...(title ? [fns.ilike(f.title, `${title}%`)] : []),
+    ...(title ? [fns.ilike(f.title, `%${title}%`)] : []),
     ...(genre ? [fns.eq(f.genre, genre)] : []),
   ]);
-  // const whereArgs = (f:any, fns: any) => fns.and(
-  //   title && fns.ilike(f.title,`%${title}%`) ,
-  //   year && fns.eq(f.year, year) ,
-  //   genre && fns.eq(f.genre, genre) ,
-  // );
 
   const queryMovies = db.sql.public.Movie.as('m')
     .innerJoin(db.sql.public.MovieReview.as('mr'), (f, fns) => fns.eq(f.m.id, f.mr.movieId))

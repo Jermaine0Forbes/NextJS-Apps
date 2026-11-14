@@ -30,3 +30,12 @@ export type MovieReview = {
 export type NonNullProp<T, K extends keyof T> = Omit<T, K> & {
   [P in K]: NonNullable<T[P]>;
 };
+
+export type MovieCardProps = {
+    title: string, 
+    year: number,
+    genre: string | null,
+    rating: number | null, 
+    reviews: number,
+
+}

@@ -1,13 +1,7 @@
+import { MovieCardProps } from "@/lib/types";
 import { Card, TextField, Container, Text, Flex, Table } from "@radix-ui/themes"
 
-type MovieCardProps = {
-    title: string, 
-    year: number,
-    genre: string | null,
-    rating: number | null, 
-    reviews: number,
 
-}
 
 export default function MovieCard({title, year, genre, rating, reviews}: MovieCardProps) {
     const avgRating = typeof rating == "number" ? rating.toFixed(1) : 0;

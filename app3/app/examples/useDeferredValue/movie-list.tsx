@@ -1,12 +1,19 @@
-import { Movie } from "@/lib/types"
+import { Movie, MovieCardProps } from "@/lib/types"
 import { Card, TextField, Container, Text, Flex, Table } from "@radix-ui/themes"
 import MovieCard from "./movie-card";
+import { useContext } from "react";
+import { SearchContext, consumeContext, SearchContextType } from "./movie-search";
 
-type MovieListProps = {
-    list: Array<Movie & { rating: number | null, reviews: number }>
-}
+// type MovieListProps = {
+//     list: Array<Movie & { rating: number | null, reviews: number }>
+// }
 
-export default function MovieList({ list }: MovieListProps) {
+
+
+export default function MovieList() {
+
+    const {list} = consumeContext<SearchContextType>(SearchContext);
+    
     return (
         <Container>
             <Card>
@@ -22,13 +29,10 @@ export default function MovieList({ list }: MovieListProps) {
                     </Table.Header>
                     <Table.Body>
                         {
-                            list.map((movie, i) => (<MovieCard key={i} {...movie} />))
+                            list.map((movie:MovieCardProps, i: number) => (<MovieCard key={i} {...movie} />))
                         }
-
                     </Table.Body>
-
                 </Table.Root>
-
             </Card>
         </Container>
     )
