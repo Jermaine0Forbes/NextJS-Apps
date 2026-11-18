@@ -1,28 +1,16 @@
 "use server";
-import Search from "@/examples/useDeferredValue/search";
-import MovieList from "@/examples/useDeferredValue/movie-list";
 import MovieSearch from "@/examples/useDeferredValue/movie-search";
 import "@radix-ui/themes/styles.css";
-import { getUserNames, queryMovies, searchMovies, getGenres } from "@/actions";
-import { Heading } from "@radix-ui/themes";
+import { queryMovies,  getGenres } from "@/actions";
 
-export default async function Example1()
-{
-    // await searchMovies();
+export default async function Example1() {
+    const movieList = await queryMovies();
+    const genreList = await getGenres();
 
-        const movieList = await queryMovies();
-        const genreList = await getGenres();
-
-    // console.log('genres');
-        // console.log(genreList);
-        // console.log(movieList);
-
-
-
-    return(
+    return (
         <main className="bg-gray-300 min-h-screen">
-          <h1 className="font-bold text-xl bg-white">useDeferredValue</h1>
-           <MovieSearch movieList={movieList} genreList={genreList}/>
+            <h1 className="font-bold text-xl bg-white">useDeferredValue</h1>
+            <MovieSearch movieList={movieList} genreList={genreList} />
         </main>
     )
 }

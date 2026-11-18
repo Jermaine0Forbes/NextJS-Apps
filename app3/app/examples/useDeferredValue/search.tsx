@@ -2,7 +2,7 @@
 import { Card, TextField, Container, Select } from "@radix-ui/themes";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import "@radix-ui/themes/styles.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useDeferredValue } from "react";
 import { searchMovies} from "@/actions";
 import { SearchContext, consumeContext, SearchContextType } from "./movie-search";
 
@@ -10,10 +10,11 @@ type SearchProps = {
     genres: Array<string>
 }
 export default function Search(children: SearchProps) {
+     const {searchQuery, setSearchQuery, setFetching} = consumeContext<SearchContextType>(SearchContext);
     const { genres } = children;
     const [movie, setMovie] = useState<string>('');
     const [genre, setGenre] = useState<string>('');
-    const [ searchQuery, setSearchQuery] = useState<string>('');
+   
     const params = new URLSearchParams({
         title: movie,
         genre: genre
@@ -24,10 +25,12 @@ export default function Search(children: SearchProps) {
     useEffect(() => {
 
         if(searchQuery){
+        setFetching(true)
         const fetch = async () => {
           const result = await searchMovies(searchQuery)
           setList([...result])
             console.log(result)
+            if(result?.length)setFetching(false)
         };
             fetch();
         }

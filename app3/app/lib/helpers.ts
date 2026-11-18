@@ -1,4 +1,5 @@
 import { NonNullProp } from "./types"
+import { setTimeout as sleep } from 'node:timers/promises';
 
 export function pluck<T, K> (column: string, data: Array<T>): Array<K>
 {
@@ -15,4 +16,11 @@ export function replaceNull<T extends object, K extends keyof T>(
     ...row,
     [key]: row[key] ?? fallback,
   })) as NonNullProp<T, K>[];
+}
+
+export async function wait()
+{
+  const randomInt = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
+  await sleep(randomInt); 
+  console.log('wait over');
 }

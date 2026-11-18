@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { or, and } from "@prisma/orm-postgres/orm-client";
 import { db } from '@/prisma/db';
+import {wait} from "@/lib/helpers";
 
 export async function GET(request: NextRequest) {
   // Example URL: /api/search/movie?title=nextjs&genre=horror
@@ -24,6 +25,8 @@ export async function GET(request: NextRequest) {
     .build()
 
   const result = await db.query(queryMovies);
+
+  await wait();
 
   return NextResponse.json(result);
 }

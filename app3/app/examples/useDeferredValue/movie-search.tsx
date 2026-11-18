@@ -1,7 +1,7 @@
 "use client"
 import Search from "@/examples/useDeferredValue/search";
 import MovieList from "@/examples/useDeferredValue/movie-list";
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState} from "react";
 
 type MovieSearchProps = {
     genreList: any,
@@ -11,6 +11,10 @@ type MovieSearchProps = {
 export type SearchContextType = {
     list: any,
     setList: any,
+    searchQuery: string, 
+    setSearchQuery: any,
+    fetching: any,
+    setFetching: any,
 }
 
 export function consumeContext<T>(contextType: any):  T{
@@ -24,9 +28,11 @@ export const SearchContext = createContext<SearchContextType | undefined>(undefi
 
 export default function MovieSearch({ genreList, movieList }: MovieSearchProps) {
     const [list, setList] = useState(movieList);
+     const [ searchQuery, setSearchQuery] = useState<string>('');
+     const [fetching, setFetching] = useState(false)
     return (
         <section>
-            <SearchContext.Provider value={{ list, setList }}>
+            <SearchContext.Provider value={{ list, setList, searchQuery, setSearchQuery, fetching, setFetching }}>
                 <Search genres={genreList} />
                 <MovieList  />
             </SearchContext.Provider>

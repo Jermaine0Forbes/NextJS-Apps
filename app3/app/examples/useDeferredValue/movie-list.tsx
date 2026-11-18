@@ -1,7 +1,7 @@
 import { Movie, MovieCardProps } from "@/lib/types"
 import { Card, TextField, Container, Text, Flex, Table } from "@radix-ui/themes"
 import MovieCard from "./movie-card";
-import { useContext } from "react";
+import { useContext, useDeferredValue } from "react";
 import { SearchContext, consumeContext, SearchContextType } from "./movie-search";
 
 // type MovieListProps = {
@@ -12,7 +12,18 @@ import { SearchContext, consumeContext, SearchContextType } from "./movie-search
 
 export default function MovieList() {
 
-    const {list} = consumeContext<SearchContextType>(SearchContext);
+    const {list, searchQuery, fetching} = consumeContext<SearchContextType>(SearchContext);
+    const defer = useDeferredValue(searchQuery);
+    const isStale = defer != searchQuery;
+
+    // console.log('defer ')
+    // console.log(defer)
+    // console.log('search')
+    // console.log(searchQuery)
+
+    console.log('is stale: '+isStale)
+
+
     
     return (
         <Container>
@@ -27,7 +38,7 @@ export default function MovieList() {
                             <Table.ColumnHeaderCell> Reviews</Table.ColumnHeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>
+                    <Table.Body className={isStale || fetching? "animate-pulse blur-md": "foo  "}>
                         {
                             list.map((movie:MovieCardProps, i: number) => (<MovieCard key={i} {...movie} />))
                         }
