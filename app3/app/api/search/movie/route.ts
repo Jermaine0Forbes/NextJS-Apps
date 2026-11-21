@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
   const result = await db.query(queryMovies);
 
-  await wait();
+  // await wait();
 
   return NextResponse.json(result);
 }

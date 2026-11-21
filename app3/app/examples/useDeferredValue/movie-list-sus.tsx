@@ -1,7 +1,7 @@
 import { Movie, MovieCardProps } from "@/lib/types"
 import { Card, TextField, Container, Text, Flex, Table, Spinner, Grid, Box, Heading, Button, ScrollArea, Separator } from "@radix-ui/themes"
 import MovieCard from "./movie-card";
-import { useContext, useDeferredValue, useRef, useEffect, Suspense, use, useState } from "react";
+import { useContext, useDeferredValue, useRef, useEffect, Suspense, use, useState, memo } from "react";
 import { SearchContext, consumeContext, SearchContextType } from "./movie-search-sus";
 import { faker } from "@faker-js/faker";
 
@@ -10,7 +10,12 @@ const { internet, helpers, lorem, date, number: num } = faker;
 //     list: Array<Movie & { rating: number | null, reviews: number }>
 // }
 
-function ChatRoom() {
+const MEMO_ON = false;
+const DEFER_ON = false;
+const SUSPENSE_ON = false;
+
+
+function Chatroom() {
 
     const createChat = (amount: number = 100) => Array.from({ length: amount }, (val, i) => ({
         user: internet.displayName(),
@@ -21,6 +26,8 @@ function ChatRoom() {
     const counter: any = useRef(0);
     const [disabled, setDisabled] = useState(false);
 
+    const defer = DEFER_ON ? useDeferredValue(messages) : messages;
+
     useEffect(() => {
         if (counter.current == 0) {
             const id = setInterval(() => {
@@ -28,32 +35,32 @@ function ChatRoom() {
                 setMessages([...m, ...messages])
             }, 5000)
             counter.current = id;
-            
+
         }
 
         // return () => clearInterval(counter.current);
     }, [counter, setMessages, createChat])
 
     const stopChat = () => {
-        console.log('foo')
+        console.log('chat stopped')
         clearInterval(counter.current);
-       setDisabled(true)
+        setDisabled(true)
     }
 
 
     return (
-        <Box>
+        <Box className="bg-gray-100 max-h-75 p-2 rounded-md pt-4">
             <Flex direction="column" align="center" gap="2">
                 <Heading>ChatRoom</Heading>
 
             </Flex>
             <ScrollArea scrollbars="vertical" style={{ height: 180 }}>
                 {
-                    messages.map((msg, i) => (
+                    defer.map((msg, i) => (
                         <Box key={i} className="mb-2">
                             <Text weight="medium">{msg.user}</Text>
                             <Text className="italic text-sm block pb-2" weight="light">{msg.message}</Text>
-                            <Separator className="w-full" size="4"/>
+                            <Separator className="w-full" size="4" />
                         </Box>
                     ))
                 }
@@ -66,14 +73,16 @@ function ChatRoom() {
     )
 }
 
+const ChatroomMemo = memo(Chatroom);
 
 
 export default function MovieListSus() {
 
     const { list, searchQuery, fetching } = consumeContext<SearchContextType>(SearchContext);
-    const defer = useDeferredValue(searchQuery);
-    const isStale = defer != searchQuery;
     const startTime = useRef(0);
+    const defer = DEFER_ON ? useDeferredValue(searchQuery) : searchQuery;
+    const isStale = defer != searchQuery;
+    let movies = null;
 
 
     useEffect(() => {
@@ -85,15 +94,17 @@ export default function MovieListSus() {
         if (!isStale && startTime.current !== null) {
             const elapsed = performance.now() - startTime.current;
             console.log(`stale time: ${(elapsed / 10000).toFixed(2)} seconds `)
-            //   console.log(`stale time: ${(elapsed /100000000).toFixed(2)} seconds `)
-
             startTime.current = 0;
         }
 
     }, [isStale, startTime])
 
 
-    // const movies: Array<MovieCardProps> | null = fetching ? use(fetching) : null;
+    if (SUSPENSE_ON) {
+        movies = fetching ? use(fetching) : list;
+
+    }
+
 
     const Loading = () => (
 
@@ -125,18 +136,25 @@ export default function MovieListSus() {
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body className={isStale ? "animate-pulse blur-md" : "foo  "}>
-                                <List />
-                                {/* {
-                                                movies != null && movies.map((movie: MovieCardProps, i: number) => (<MovieCard key={i} {...movie} />))
+                                {
 
-                                } */}
+                                    SUSPENSE_ON ?
+
+                                        <List />
+                                        :
+                                        movies != null && movies.map((movie: MovieCardProps, i: number) => (<MovieCard key={i} {...movie} />))
+
+                                }
                             </Table.Body>
                         </Table.Root>
                     </Suspense>
                 </Card>
-                <Card>
-                    <ChatRoom />
-                </Card>
+                {
+                    MEMO_ON ?
+                        <ChatroomMemo />
+                        :
+                        <Chatroom />
+                }
             </Grid>
         </Container>
     )
